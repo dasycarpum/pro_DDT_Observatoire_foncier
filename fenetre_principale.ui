@@ -153,13 +153,13 @@
        <widget class="QGroupBox" name="groupBox_territoire">
         <property name="minimumSize">
          <size>
-          <width>250</width>
+          <width>270</width>
           <height>200</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>250</width>
+          <width>270</width>
           <height>200</height>
          </size>
         </property>
@@ -175,6 +175,11 @@
              <height>0</height>
             </size>
            </property>
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -185,6 +190,11 @@
          </item>
          <item row="0" column="1">
           <widget class="QRadioButton" name="radioButton_epci">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -195,6 +205,11 @@
          </item>
          <item row="1" column="0">
           <widget class="QRadioButton" name="radioButton_scot">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -205,6 +220,11 @@
          </item>
          <item row="1" column="1">
           <widget class="QRadioButton" name="radioButton_departement">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -218,6 +238,11 @@
          </item>
          <item row="5" column="0" colspan="2">
           <widget class="QComboBox" name="comboBox_geographie">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -275,7 +300,7 @@
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

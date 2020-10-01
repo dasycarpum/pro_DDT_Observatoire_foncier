@@ -6,6 +6,13 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
     , ui(new Ui::FenetrePrincipale)
 {
     ui->setupUi(this);
+
+    /* Initialisation du territoire */
+    ui->radioButton_commune->setChecked(true);
+    QStringList liste_geographies = Territoire::Liste_libelles_geographies("Commune");
+    ui->comboBox_geographie->addItems(liste_geographies);
+
+
 }
 
 FenetrePrincipale::~FenetrePrincipale()

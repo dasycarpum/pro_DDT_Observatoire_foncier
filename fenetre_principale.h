@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "territoire.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class FenetrePrincipale; }
 QT_END_NAMESPACE
@@ -10,6 +12,7 @@ QT_END_NAMESPACE
 class FenetrePrincipale : public QMainWindow
 {
     Q_OBJECT
+
 
 public:
     FenetrePrincipale(QWidget *parent = nullptr);
