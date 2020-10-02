@@ -13,13 +13,17 @@ QT_END_NAMESPACE
 class FenetrePrincipale : public QMainWindow
 {
     Q_OBJECT
+    Ui::FenetrePrincipale *ui;
 
+    Territoire *territoire;
+    Periode *periode;
 
 public:
     FenetrePrincipale(QWidget *parent = nullptr);
     ~FenetrePrincipale();
 
-private:
-    Ui::FenetrePrincipale *ui;
+public slots:
+    void Validation_des_saisies(bool);
+
 };
 #endif // FENETREPRINCIPALE_H

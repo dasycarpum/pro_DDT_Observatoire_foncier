@@ -7,17 +7,26 @@
 
 #include "fichier.h"
 
+const QString DEPARTEMENT = "54";
+const int champ_departement = 3;
+const int champ_code_commune = 1;
+const int champ_libelle = 8;
+
+
 class Territoire
 {
     QString granularite;                // plus petit grain = commune; sinon EPCI, SCoT, département
     QPair<QString, QString> geographie; // code, libellé
+    QStringList liste_codes_INSEE_communes;
 
 public:
-    Territoire(QString const& gra, QPair<QString, QString> const& geo) : granularite(gra), geographie(geo) {}
+    Territoire(QString const&, QPair<QString, QString> const&);
     ~Territoire(){}
 
+    QStringList Liste_codes_INSEE_communes(void) const {return liste_codes_INSEE_communes;}
+
     static QStringList Liste_libelles_geographies(QString const&);
-    QStringList Liste_codes_INSEE_communes(void);
+
 };
 
 #endif // TERRITOIRE_H
