@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "territoire.h"
+#include "periode.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FenetrePrincipale; }

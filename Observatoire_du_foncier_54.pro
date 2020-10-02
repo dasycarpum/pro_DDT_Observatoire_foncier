@@ -19,11 +19,13 @@ SOURCES += \
     fichier.cpp \
     main.cpp \
     fenetre_principale.cpp \
+    periode.cpp \
     territoire.cpp
 
 HEADERS += \
     fenetre_principale.h \
     fichier.h \
+    periode.h \
     territoire.h
 
 FORMS += \

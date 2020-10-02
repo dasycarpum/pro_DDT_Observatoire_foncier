@@ -104,6 +104,9 @@
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
+           <property name="maximum">
+            <number>2100</number>
+           </property>
           </widget>
          </item>
          <item row="1" column="0">
@@ -120,6 +123,9 @@
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="maximum">
+            <number>2100</number>
            </property>
           </widget>
          </item>
@@ -300,7 +306,7 @@
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

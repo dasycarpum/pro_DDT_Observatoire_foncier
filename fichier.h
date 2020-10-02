@@ -2,6 +2,7 @@
 #define FICHIERTEXTE_H
 
 #include <QFile>
+#include <QDir>
 #include <QCoreApplication>
 #include <QMessageBox>
 
@@ -20,6 +21,7 @@ public:
     ~FichierCsv(){}
 
     void Lire(void);
+    static QStringList Liste_sous_repertoires(QString const&);
 };
 
 #endif // FICHIERTEXTE_H

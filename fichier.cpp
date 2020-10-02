@@ -24,3 +24,28 @@ void FichierCsv::Lire(void)
         ++l;
     }
 }
+
+/** Retourne la liste des sous-dossiers d'un répertoire
+    =================================================== */
+QStringList FichierCsv::Liste_sous_repertoires(const QString & repertoire)
+{
+    QStringList liste;
+
+    QDir dir;
+    if (repertoire.mid(1,1) != ":")
+        dir.setPath(QCoreApplication::applicationDirPath() + repertoire);
+    else
+        dir.setPath(repertoire);
+
+    QFileInfoList listRepertoire = dir.entryInfoList(QDir::Dirs);
+
+    for (int i(0); i < listRepertoire.size(); ++i)
+    {
+        QFileInfo fileInfos = listRepertoire.at(i);
+
+        if (fileInfos.baseName().size() > 0)
+            liste.append(fileInfos.baseName());
+    }
+
+    return liste;
+}
