@@ -8,7 +8,7 @@ Territoire::Territoire(QString const& gra, QPair<QString, QString> const& geo) :
         f->Lire();
 
         for (int i(1); i < f->matrix.size(); ++i)
-            if (f->matrix[i][champ_departement] == DEPARTEMENT && f->matrix[i][champ_libelle] == geographie.second)
+            if (f->matrix[i][champ_departement] == DEPARTEMENT && f->matrix[i][champ_libelle_commune] == geographie.second)
                 liste_codes_INSEE_communes.append(f->matrix[i][champ_code_commune]);
 
         delete f;
@@ -24,7 +24,7 @@ QStringList Territoire::Liste_libelles_geographies(QString const& granularite)
 
     for (int i(1); i < f->matrix.size(); ++i)
         if (f->matrix[i][champ_departement] == DEPARTEMENT)
-            liste.append(f->matrix[i][champ_libelle]);
+            liste.append(f->matrix[i][champ_libelle_commune]);
 
     delete f;
 

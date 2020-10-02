@@ -5,6 +5,7 @@
 
 #include "territoire.h"
 #include "periode.h"
+#include "algorithme.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FenetrePrincipale; }

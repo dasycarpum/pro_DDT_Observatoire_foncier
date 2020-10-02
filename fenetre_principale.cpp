@@ -43,8 +43,8 @@ void FenetrePrincipale::Validation_des_saisies(bool)
     periode->Annee_fin(ui->spinBox_an_fin->value());
     periode->Pas_de_temps(ui->spinBox_an_pas->value());
 
-
-
+    /* Calcul des occupations du sol par année */
+    Algorithme *algorithme = new Algorithme(territoire, periode);
 
 }
 
