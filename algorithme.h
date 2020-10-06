@@ -30,6 +30,8 @@ class Algorithme
 public:
     Algorithme(const Territoire *, const Periode *);
     ~Algorithme(){}
+
+    Usage Foncier(void) const {return foncier;}
 };
 
 #endif // ALGORITHME_H

@@ -23,6 +23,8 @@ public:
     FenetrePrincipale(QWidget *parent = nullptr);
     ~FenetrePrincipale();
 
+    void Affichage_tableau_occupation(const Algorithme *);
+
 public slots:
     void Validation_des_saisies(bool);
 

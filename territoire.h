@@ -26,6 +26,9 @@ public:
     Territoire(QString const&, QPair<QString, QString> const&);
     ~Territoire(){}
 
+    QString Granularite(void) const {return granularite;}
+    QPair<QString, QString> Geographie(void) const {return geographie;}
+
     QStringList Liste_codes_INSEE_communes(void) const {return liste_codes_INSEE_communes;}
 
     static QStringList Liste_libelles_geographies(QString const&);
