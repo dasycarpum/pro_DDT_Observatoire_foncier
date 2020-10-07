@@ -24,6 +24,7 @@ public:
     ~FenetrePrincipale();
 
     void Affichage_tableau_occupation(const Algorithme *);
+    void Affichage_tableau_evolution(const Algorithme *);
 
 public slots:
     void Validation_des_saisies(bool);

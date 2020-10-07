@@ -48,6 +48,7 @@ void FenetrePrincipale::Validation_des_saisies(bool)
 
     /* Affichage des tableaux de résultats */
     Affichage_tableau_occupation(algorithme);
+    Affichage_tableau_evolution(algorithme);
 
 }
 
@@ -56,7 +57,7 @@ void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
     /* Rafraichissement de la zone d'édition */
     ui->textBrowser_resultat->clear();
 
-    /* Territoire d'étude et millésime des données */
+    /* Titre = territoire d'étude et millésime des données */
     ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 ALIGN=center>"
                                                 "<TR>"
                                                     "<TD align=center><h2>%1 : %2</h2><h3>Données foncières au 1<SUP>er</SUP> janvier %3</h2></TD>"
@@ -92,4 +93,65 @@ void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
                                                 .arg(algo->Foncier().non_bati, 0, 'f', 2)
                                                 .arg(algo->Foncier().a_batir, 0, 'f', 2)
                                                 .arg(algo->Foncier().enaf, 0, 'f', 2));
+}
+
+void FenetrePrincipale::Affichage_tableau_evolution(const Algorithme * algo)
+{
+    /* Titre et en-têtes de colonnes */
+    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 ALIGN=center>"
+                                                 "<TR>"
+                                                     "<TD align=center colspan=7><h2>Evolution de l'occupation du sol entre %1 et %2</h2></TD>"
+                                                 "</TR>"
+                                                 "<TR>"
+                                                     "<TD WIDTH=65 align=center><b>Année</b></TD>"
+                                                     "<TD WIDTH=80 align=center><b>Habitat individuel</b></TD>"
+                                                     "<TD WIDTH=77 align=center><b>Habitat collectif</b></TD>"
+                                                     "<TD WIDTH=80 align=center><b>Non résidentiel</b></TD>"
+                                                     "<TD WIDTH=80 align=center><b>Total artificialisé</b></TD>"
+                                                     "<TD WIDTH=80 align=center><b>Espace nat., agri. et forestier</b></TD>"
+                                                     "<TD align=center><b>Consommation foncière cumulée</b></TD>"
+                                                 "</TR>"
+                                             "</TABLE>")
+                                                .arg(periode->Annee_debut())
+                                                .arg(periode->Annee_fin()));
+
+    Usage surf_cumul; double enaf_init(0.0); int i(0);
+
+    for (QMap<int, Usage>::const_iterator it = algo->Usages_par_annee().cbegin(); it != algo->Usages_par_annee().cend(); ++it){
+        surf_cumul.habitat_individuel += it.value().habitat_individuel;
+        surf_cumul.habitat_collectif += it.value().habitat_collectif;
+        surf_cumul.non_residentiel += it.value().non_residentiel;
+
+        if (it.key() >= periode->Annee_debut()
+                && (it.key() - periode->Annee_debut()) % periode->Pas_de_temps() == 0
+                && it.key() <= periode->Annee_fin()){
+            surf_cumul.artificialise = (surf_cumul.habitat_individuel + surf_cumul.habitat_collectif + surf_cumul.non_residentiel) / ((algo->Foncier().habitat + algo->Foncier().non_residentiel) / algo->Foncier().artificialise);
+            surf_cumul.enaf = algo->Surface_ign() / HA - surf_cumul.artificialise;
+            if (i == 0)
+                enaf_init = surf_cumul.enaf;
+
+            ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 ALIGN=center>"
+                                                         "<TR>"
+                                                             "<TD WIDTH=65 align=center><b>%1</b></TD>"
+                                                             "<TD WIDTH=80 align=center>%L2 ha</TD>"
+                                                             "<TD WIDTH=77 align=center>%L3 ha</TD>"
+                                                             "<TD WIDTH=80 align=center>%L4 ha</TD>"
+                                                             "<TD WIDTH=80 align=center>%L5 ha</TD>"
+                                                             "<TD WIDTH=80 align=center>%L6 ha</TD>"
+                                                             "<TD align=center>%L7 ha - %L8 %</TD>"
+                                                         "</TR>"
+                                                     "</TABLE>")
+                                                         .arg(QString::number(it.key()))
+                                                         .arg(surf_cumul.habitat_individuel, 0, 'f', 1)
+                                                         .arg(surf_cumul.habitat_collectif, 0, 'f', 1)
+                                                         .arg(surf_cumul.non_residentiel, 0, 'f', 1)
+                                                         .arg(surf_cumul.artificialise, 0, 'f', 1)
+                                                         .arg(surf_cumul.enaf, 0, 'f', 1)
+                                                         .arg(enaf_init - surf_cumul.enaf, 0, 'f', 1)
+                                                         .arg((enaf_init - surf_cumul.enaf) * 100 / enaf_init, 0, 'f', 1));
+
+            ++i;
+        }
+
+    }
 }
