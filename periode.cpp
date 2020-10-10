@@ -6,12 +6,12 @@ void Periode::Dernier_millesime_majic(void)
 {
     QStringList liste = FichierCsv::Liste_sous_repertoires("/databank/");
 
-    foreach (QString const& ss_rep, liste) {
-        if (ss_rep.split('_').first() == "MAJIC")
-            annee_fin = ss_rep.split('_').last().toInt() - 1;
-    }
+    foreach (QString const& ss_rep, liste)
+        if (ss_rep.split('_').first() == "MAJIC"){
+            millesime = ss_rep.split('_').last().toInt();
+            annee_fin = millesime - 1;
+        }
 }
-
 
 /** Ajustement de la date de début, en fonction de celle de fin et du pas de temps
  *  ============================================================================== */

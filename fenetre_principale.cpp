@@ -39,6 +39,7 @@ void FenetrePrincipale::Validation_des_saisies(bool)
 
     /* Période d'observation */
     periode = new Periode();
+    periode->Dernier_millesime_majic();
     periode->Annee_debut(ui->spinBox_an_debut->value());
     periode->Annee_fin(ui->spinBox_an_fin->value());
     periode->Pas_de_temps(ui->spinBox_an_pas->value());
@@ -60,12 +61,12 @@ void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
     /* Titre = territoire d'étude et millésime des données */
     ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 ALIGN=center>"
                                                 "<TR>"
-                                                    "<TD align=center><h2>%1 : %2</h2><h3>Données foncières au 1<SUP>er</SUP> janvier %3</h2></TD>"
+                                                    "<TD align=center><h2>%1 : %2</h2><h3>Données foncières <small>(MAJIC - DGFiP)</small> au 1<SUP>er</SUP> janvier %3</h2></TD>"
                                                 "</TR>"
                                              "</TABLE><br>")
                                                 .arg(territoire->Granularite())
                                                 .arg(territoire->Geographie().second)
-                                                .arg(periode->Annee_fin() + 1));
+                                                .arg(periode->Millesime()));
 
     /* Occupation du sol au dernier millésime de données */
     ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 align=center>"
