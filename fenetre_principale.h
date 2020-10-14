@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QButtonGroup>
+#include <qwt_plot.h>
+#include <qwt_plot_curve.h>
 
 #include "territoire.h"
 #include "periode.h"
@@ -27,6 +29,7 @@ public:
 
     void Affichage_tableau_occupation(const Algorithme *);
     void Affichage_tableau_evolution(const Algorithme *);
+    void Affichage_graphique_bati_cumul(const Algorithme *);
 
 public slots:
     void Gestion_granularite_territoire(QAbstractButton *);

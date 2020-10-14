@@ -169,6 +169,11 @@ void FenetrePrincipale::Affichage_tableau_evolution(const Algorithme * algo)
 
             ++i;
         }
-
     }
+}
+
+void FenetrePrincipale::Affichage_graphique_bati_cumul(const Algorithme * algo)
+{
+
+
 }

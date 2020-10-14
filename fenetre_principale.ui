@@ -44,6 +44,16 @@
              </item>
             </layout>
            </widget>
+           <widget class="QWidget" name="tab_bati_cumul">
+            <attribute name="title">
+             <string>Bâti cumulé</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_bati_cumul"/>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
         </layout>
