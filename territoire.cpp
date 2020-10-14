@@ -4,7 +4,7 @@ Territoire::Territoire(QString const& gra, QPair<QString, QString> const& geo) :
 {
     if (geographie.first.isEmpty()){
 
-        /* N° de champ du code géographique pour la granularité choisie par l'utilisateur */
+        /* N° de champ du libellé géographique pour la granularité choisie par l'utilisateur */
         int champ_lib_geo(0), champ_cod_com(0), champ_cod_dep(0);
 
         FichierCsv *g = new FichierCsv("/databank/territoire/granularite");
@@ -18,19 +18,18 @@ Territoire::Territoire(QString const& gra, QPair<QString, QString> const& geo) :
             if (g->matrix[i][0] == "Commune")
                 champ_cod_com =  g->matrix[i][1].toInt();
         }
-qDebug() << champ_lib_geo << champ_cod_com << champ_cod_dep;
+        delete g;
+
+        /* Liste des codes INSEE communaux du territoire */
         FichierCsv *cl = new FichierCsv("/databank/territoire/code_libelle");
         cl->Lire();
-qDebug() << granularite<< geographie.second;
+
         for (int i(1); i < cl->matrix.size(); ++i)
             if (cl->matrix[i][champ_cod_dep] == DEPARTEMENT && cl->matrix[i][champ_lib_geo] == geographie.second)
                 liste_codes_INSEE_communes.append(cl->matrix[i][champ_cod_com]);
 
-        delete cl;
-        delete g;
+        delete cl;   
     }
-
-    qDebug() << liste_codes_INSEE_communes;
 }
 
 QStringList Territoire::Liste_libelles_geographies(QString const& granularite)
@@ -49,6 +48,7 @@ QStringList Territoire::Liste_libelles_geographies(QString const& granularite)
         if (g->matrix[i][0] == "Département")
             champ_cod_dep =  g->matrix[i][1].toInt();
     }
+    delete g;
 
     /* Liste des libellés géographiques pour la granularité retenue */
     FichierCsv *cl = new FichierCsv("/databank/territoire/code_libelle");
@@ -59,7 +59,7 @@ QStringList Territoire::Liste_libelles_geographies(QString const& granularite)
             liste_libelle[cl->matrix[i][champ_lib_geo]] = true;
 
     delete cl;
-    delete g;
+
 
     return liste_libelle.keys();
 }
