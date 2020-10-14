@@ -203,7 +203,7 @@
          <item row="0" column="1">
           <widget class="QRadioButton" name="radioButton_epci">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="font">
             <font>
@@ -221,7 +221,7 @@
          <item row="1" column="0">
           <widget class="QRadioButton" name="radioButton_scot">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="font">
             <font>
@@ -239,7 +239,7 @@
          <item row="1" column="1">
           <widget class="QRadioButton" name="radioButton_departement">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="font">
             <font>

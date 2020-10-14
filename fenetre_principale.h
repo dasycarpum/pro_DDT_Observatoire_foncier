@@ -2,6 +2,7 @@
 #define FENETREPRINCIPALE_H
 
 #include <QMainWindow>
+#include <QButtonGroup>
 
 #include "territoire.h"
 #include "periode.h"
@@ -17,6 +18,7 @@ class FenetrePrincipale : public QMainWindow
     Ui::FenetrePrincipale *ui;
 
     Territoire *territoire;
+    QButtonGroup *grp_granularite;
     Periode *periode;
 
 public:
@@ -27,6 +29,7 @@ public:
     void Affichage_tableau_evolution(const Algorithme *);
 
 public slots:
+    void Gestion_granularite_territoire(QAbstractButton *);
     void Validation_des_saisies(bool);
 
 };

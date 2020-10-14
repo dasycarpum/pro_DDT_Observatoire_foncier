@@ -7,10 +7,17 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
 {
     ui->setupUi(this);
 
+    /* Granularités territoriales : commune, EPCI, SCoT, département */
+    grp_granularite = new QButtonGroup(ui->groupBox_territoire);
+    grp_granularite->addButton(ui->radioButton_commune);
+    grp_granularite->addButton(ui->radioButton_epci);
+    grp_granularite->addButton(ui->radioButton_scot);
+    grp_granularite->addButton(ui->radioButton_departement);
+    connect(grp_granularite, SIGNAL(buttonClicked(QAbstractButton *)), this, SLOT(Gestion_granularite_territoire(QAbstractButton *)));
+
     /* Initialisation du territoire d'étude */
     ui->radioButton_commune->setChecked(true);
-    QStringList liste_geographies = Territoire::Liste_libelles_geographies("Commune");
-    ui->comboBox_geographie->addItems(liste_geographies);
+    Gestion_granularite_territoire(ui->radioButton_commune);
 
     /* Initialisation de la période d'observation */
     Periode *p = new Periode();
@@ -28,6 +35,15 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
 FenetrePrincipale::~FenetrePrincipale()
 {
     delete ui;
+    delete grp_granularite;
+    delete territoire;
+}
+
+void FenetrePrincipale::Gestion_granularite_territoire(QAbstractButton * button)
+{
+    ui->comboBox_geographie->clear();
+    QStringList liste_geographies = Territoire::Liste_libelles_geographies(button->text());
+    ui->comboBox_geographie->addItems(liste_geographies);
 }
 
 void FenetrePrincipale::Validation_des_saisies(bool)
@@ -35,7 +51,7 @@ void FenetrePrincipale::Validation_des_saisies(bool)
     /* Territoire d'étude */
     QPair<QString, QString> geographie;
     geographie.second = ui->comboBox_geographie->currentText();
-    territoire = new Territoire("Commune", geographie);
+    territoire = new Territoire(grp_granularite->button(grp_granularite->checkedId())->text(), geographie);
 
     /* Période d'observation */
     periode = new Periode();
