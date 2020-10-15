@@ -23,6 +23,8 @@ class FenetrePrincipale : public QMainWindow
     QButtonGroup *grp_granularite;
     Periode *periode;
 
+    QwtPlot *graph_bati_cumul;
+
 public:
     FenetrePrincipale(QWidget *parent = nullptr);
     ~FenetrePrincipale();

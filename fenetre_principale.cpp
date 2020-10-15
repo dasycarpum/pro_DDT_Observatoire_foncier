@@ -67,6 +67,11 @@ void FenetrePrincipale::Validation_des_saisies(bool)
     Affichage_tableau_occupation(algorithme);
     Affichage_tableau_evolution(algorithme);
 
+    /* Affichage des graphiques de résultats */
+    if (!ui->horizontalLayout_bati_cumul->isEmpty())
+        ui->horizontalLayout_bati_cumul->removeWidget(graph_bati_cumul);
+    Affichage_graphique_bati_cumul(algorithme);
+
 }
 
 void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
@@ -174,6 +179,9 @@ void FenetrePrincipale::Affichage_tableau_evolution(const Algorithme * algo)
 
 void FenetrePrincipale::Affichage_graphique_bati_cumul(const Algorithme * algo)
 {
+    graph_bati_cumul = new QwtPlot(this);
 
+    ui->horizontalLayout_bati_cumul->insertWidget(0, graph_bati_cumul);
 
+    graph_bati_cumul->replot();
 }
