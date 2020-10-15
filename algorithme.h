@@ -26,6 +26,7 @@ class Algorithme
     double surface_ign;
     Usage foncier;
     QMap<int, Usage> usages_par_annee;
+    const Periode *periode;
 
 public:
     Algorithme(const Territoire *, const Periode *);
@@ -33,8 +34,9 @@ public:
 
     double Surface_ign(void) const {return surface_ign;}
     Usage Foncier(void) const {return foncier;}
-
     QMap<int, Usage> Usages_par_annee(void) const {return usages_par_annee;}
+
+    QVector<QPointF> Habitat_ind(void);
 };
 
 #endif // ALGORITHME_H

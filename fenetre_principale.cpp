@@ -177,11 +177,14 @@ void FenetrePrincipale::Affichage_tableau_evolution(const Algorithme * algo)
     }
 }
 
-void FenetrePrincipale::Affichage_graphique_bati_cumul(const Algorithme * algo)
+void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
 {
     graph_bati_cumul = new QwtPlot(this);
 
-    ui->horizontalLayout_bati_cumul->insertWidget(0, graph_bati_cumul);
+    QwtPlotCurve *curve1 = new QwtPlotCurve( "Curve 1" );
+    curve1->setSamples(algo->Habitat_ind());
+    curve1->attach(graph_bati_cumul);
 
+    ui->horizontalLayout_bati_cumul->insertWidget(0, graph_bati_cumul);
     graph_bati_cumul->replot();
 }

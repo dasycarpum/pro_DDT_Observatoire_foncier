@@ -31,7 +31,7 @@ public:
 
     void Affichage_tableau_occupation(const Algorithme *);
     void Affichage_tableau_evolution(const Algorithme *);
-    void Affichage_graphique_bati_cumul(const Algorithme *);
+    void Affichage_graphique_bati_cumul(Algorithme *);
 
 public slots:
     void Gestion_granularite_territoire(QAbstractButton *);
