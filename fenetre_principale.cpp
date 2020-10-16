@@ -177,14 +177,46 @@ void FenetrePrincipale::Affichage_tableau_evolution(const Algorithme * algo)
     }
 }
 
+class EchelleTxt : public QwtScaleDraw
+{
+    virtual QwtText label (double value) const override
+    {
+        return QwtText(QString::number(value, 'f', 0));
+    }
+};
+
 void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
 {
+    /* Graphique */
     graph_bati_cumul = new QwtPlot(this);
+    graph_bati_cumul->setTitle("Surfaces cumulées du bâti");
+    graph_bati_cumul->setAxisTitle(QwtPlot::xBottom, "Année");
+    graph_bati_cumul->setAxisTitle(QwtPlot::yLeft, "Surface en hectare");
+    graph_bati_cumul->setCanvasBackground(QBrush(QColor("#D9CCB0")));
 
-    QwtPlotCurve *curve1 = new QwtPlotCurve( "Curve 1" );
+    /* Format de l'échelle */
+    EchelleTxt * x = new EchelleTxt();
+    x->setLabelRotation(-45);
+    graph_bati_cumul->setAxisScaleDraw(QwtPlot::xBottom, x);
+
+    /* Grille */
+    QwtPlotGrid *grille = new QwtPlotGrid();
+    grille->setPen(QPen(Qt::darkGray, 0 , Qt::DotLine));
+    grille->attach(graph_bati_cumul);
+
+    /* Courbes */
+    QwtPlotCurve *curve1 = new QwtPlotCurve( "Habitat individuel" );
     curve1->setSamples(algo->Habitat_ind());
+    curve1->setCurveAttribute(QwtPlotCurve::Fitted);
+    curve1->setPen(QColor(Qt::red), 2);
     curve1->attach(graph_bati_cumul);
 
+    /* Légende */
+    QwtLegend *legend = new QwtLegend();
+    curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
+    graph_bati_cumul->insertLegend(legend, QwtPlot::RightLegend);
+
+    /* Insertion du graphique */
     ui->horizontalLayout_bati_cumul->insertWidget(0, graph_bati_cumul);
     graph_bati_cumul->replot();
 }
