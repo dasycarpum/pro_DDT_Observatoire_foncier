@@ -187,7 +187,7 @@ class EchelleTxt : public QwtScaleDraw
 
 void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
 {
-    /* Graphique */
+    /* Graphique : présentation */
     graph_bati_cumul = new QwtPlot(this);
     graph_bati_cumul->setTitle("Surfaces cumulées du bâti");
     graph_bati_cumul->setAxisTitle(QwtPlot::xBottom, "Année");
@@ -205,29 +205,23 @@ void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
     grille->attach(graph_bati_cumul);
 
     /* Courbes */
-    QwtPlotCurve *curve1 = new QwtPlotCurve( "Habitat individuel" );
-    curve1->setSamples(algo->Bati_cumule(&Usage::habitat_individuel));
-    curve1->setCurveAttribute(QwtPlotCurve::Fitted);
-    curve1->setPen(QColor(Qt::red), 2);
-    curve1->attach(graph_bati_cumul);
+    QVector<QString> titre = {"Habitat individuel", "Habitat collectif", "Non résidentiel"};
+    QVector<double Usage:: *> usage = {&Usage::habitat_individuel, &Usage::habitat_collectif, &Usage::non_residentiel};
+    QVector<QColor> couleur = {Qt::red, Qt::darkRed, Qt::darkMagenta};
 
-    QwtPlotCurve *curve2 = new QwtPlotCurve( "Habitat collectif" );
-    curve2->setSamples(algo->Bati_cumule(&Usage::habitat_collectif));
-    curve2->setCurveAttribute(QwtPlotCurve::Fitted);
-    curve2->setPen(QColor(Qt::darkRed), 2);
-    curve2->attach(graph_bati_cumul);
+    auto tuple = std::make_tuple(titre, usage, couleur);
 
-    QwtPlotCurve *curve3 = new QwtPlotCurve( "Non résidentiel" );
-    curve3->setSamples(algo->Bati_cumule(&Usage::non_residentiel));
-    curve3->setCurveAttribute(QwtPlotCurve::Fitted);
-    curve3->setPen(QColor(Qt::darkMagenta), 2);
-    curve3->attach(graph_bati_cumul);
+    for (int i(0); i < 3; ++i){
+        QwtPlotCurve *curve = new QwtPlotCurve( std::get<0>(tuple).at(i) );
+        curve->setSamples(algo->Bati_cumule( std::get<1>(tuple).at(i)) );
+        curve->setCurveAttribute(QwtPlotCurve::Fitted);
+        curve->setPen(QColor( std::get<2>(tuple).at(i) ), 2);
+        curve->setLegendAttribute( QwtPlotCurve::LegendShowLine );
+        curve->attach(graph_bati_cumul);
+    }
 
     /* Légende */
     QwtLegend *legend = new QwtLegend();
-    curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
-    curve2->setLegendAttribute( QwtPlotCurve::LegendShowLine );
-    curve3->setLegendAttribute( QwtPlotCurve::LegendShowLine );
     graph_bati_cumul->insertLegend(legend, QwtPlot::RightLegend);
 
     /* Insertion du graphique */
