@@ -18,7 +18,6 @@ struct Usage
 
     Usage(){enaf = artificialise = habitat = habitat_individuel = habitat_collectif =
                     non_residentiel = dependance = non_bati = a_batir = 0.0;}
-    ~Usage(){}
 };
 
 class Algorithme
@@ -36,7 +35,7 @@ public:
     Usage Foncier(void) const {return foncier;}
     QMap<int, Usage> Usages_par_annee(void) const {return usages_par_annee;}
 
-    QVector<QPointF> Habitat_ind(void);
+    QVector<QPointF> Bati_cumule(double Usage::*arg);
 };
 
 #endif // ALGORITHME_H

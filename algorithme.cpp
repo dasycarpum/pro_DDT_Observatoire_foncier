@@ -92,27 +92,22 @@ Algorithme::Algorithme(const Territoire * t, const Periode * p) : periode(p)
     }
 }
 
-QVector<QPointF> Algorithme::Habitat_ind(void)
+QVector<QPointF> Algorithme::Bati_cumule(double Usage:: *arg)
 {
     QVector<QPointF> xy;
 
-    Usage cumule, annuel; double enaf_init(0.0);
+    double cumule(0.0);
 
     for (QMap<int, Usage>::const_iterator it = usages_par_annee.cbegin(); it != usages_par_annee.cend(); ++it){
 
-        cumule.habitat_individuel += it.value().habitat_individuel;
-        cumule.artificialise = (cumule.habitat_individuel + cumule.habitat_collectif + cumule.non_residentiel) / ((foncier.habitat + foncier.non_residentiel) / foncier.artificialise);
-        cumule.enaf = surface_ign / HA - cumule.artificialise;
-
-        if (it.key() >= periode->Annee_debut())
-            enaf_init = cumule.enaf;
+        cumule += it.value().*arg;
 
         if (it.key() >= periode->Annee_debut()
                 && (it.key() - periode->Annee_debut()) % periode->Pas_de_temps() == 0
                 && it.key() < periode->Annee_fin()){
             QPointF p;
             p.rx() = it.key();
-            p.ry() = cumule.habitat_individuel;
+            p.ry() = cumule;
             xy.append(p);
         }
     }

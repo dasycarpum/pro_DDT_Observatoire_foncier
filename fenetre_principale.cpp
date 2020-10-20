@@ -206,14 +206,28 @@ void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
 
     /* Courbes */
     QwtPlotCurve *curve1 = new QwtPlotCurve( "Habitat individuel" );
-    curve1->setSamples(algo->Habitat_ind());
+    curve1->setSamples(algo->Bati_cumule(&Usage::habitat_individuel));
     curve1->setCurveAttribute(QwtPlotCurve::Fitted);
     curve1->setPen(QColor(Qt::red), 2);
     curve1->attach(graph_bati_cumul);
 
+    QwtPlotCurve *curve2 = new QwtPlotCurve( "Habitat collectif" );
+    curve2->setSamples(algo->Bati_cumule(&Usage::habitat_collectif));
+    curve2->setCurveAttribute(QwtPlotCurve::Fitted);
+    curve2->setPen(QColor(Qt::darkRed), 2);
+    curve2->attach(graph_bati_cumul);
+
+    QwtPlotCurve *curve3 = new QwtPlotCurve( "Non résidentiel" );
+    curve3->setSamples(algo->Bati_cumule(&Usage::non_residentiel));
+    curve3->setCurveAttribute(QwtPlotCurve::Fitted);
+    curve3->setPen(QColor(Qt::darkMagenta), 2);
+    curve3->attach(graph_bati_cumul);
+
     /* Légende */
     QwtLegend *legend = new QwtLegend();
     curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
+    curve2->setLegendAttribute( QwtPlotCurve::LegendShowLine );
+    curve3->setLegendAttribute( QwtPlotCurve::LegendShowLine );
     graph_bati_cumul->insertLegend(legend, QwtPlot::RightLegend);
 
     /* Insertion du graphique */
