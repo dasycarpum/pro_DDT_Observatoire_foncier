@@ -18,7 +18,6 @@ struct Usage
 
     Usage(){enaf = artificialise = habitat = habitat_individuel = habitat_collectif =
                     non_residentiel = dependance = non_bati = a_batir = 0.0;}
-    ~Usage(){}
 };
 
 class Algorithme
@@ -26,6 +25,7 @@ class Algorithme
     double surface_ign;
     Usage foncier;
     QMap<int, Usage> usages_par_annee;
+    const Periode *periode;
 
 public:
     Algorithme(const Territoire *, const Periode *);
@@ -33,8 +33,9 @@ public:
 
     double Surface_ign(void) const {return surface_ign;}
     Usage Foncier(void) const {return foncier;}
-
     QMap<int, Usage> Usages_par_annee(void) const {return usages_par_annee;}
+
+    QVector<QPointF> Bati_cumule(double Usage::*arg);
 };
 
 #endif // ALGORITHME_H

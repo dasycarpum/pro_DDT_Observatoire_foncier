@@ -3,6 +3,11 @@
 
 #include <QMainWindow>
 #include <QButtonGroup>
+#include <qwt_plot.h>
+#include <qwt_plot_curve.h>
+#include <qwt_legend.h>
+#include <qwt_plot_grid.h>
+#include <qwt_scale_draw.h>
 
 #include "territoire.h"
 #include "periode.h"
@@ -21,12 +26,15 @@ class FenetrePrincipale : public QMainWindow
     QButtonGroup *grp_granularite;
     Periode *periode;
 
+    QwtPlot *graph_bati_cumul;
+
 public:
     FenetrePrincipale(QWidget *parent = nullptr);
     ~FenetrePrincipale();
 
     void Affichage_tableau_occupation(const Algorithme *);
     void Affichage_tableau_evolution(const Algorithme *);
+    void Affichage_graphique_bati_cumul(Algorithme *);
 
 public slots:
     void Gestion_granularite_territoire(QAbstractButton *);

@@ -1,6 +1,6 @@
 #include "algorithme.h"
 
-Algorithme::Algorithme(const Territoire * t, const Periode * p)
+Algorithme::Algorithme(const Territoire * t, const Periode * p) : periode(p)
 {
     /* Surface totale du ban communal (IGN BD Topo)
        -------------------------------------------- */
@@ -90,4 +90,27 @@ Algorithme::Algorithme(const Territoire * t, const Periode * p)
         usages_par_annee[annee].habitat_collectif += 0;
         usages_par_annee[annee].non_residentiel += 0;
     }
+}
+
+QVector<QPointF> Algorithme::Bati_cumule(double Usage:: *arg)
+{
+    QVector<QPointF> xy;
+
+    double cumule(0.0);
+
+    for (QMap<int, Usage>::const_iterator it = usages_par_annee.cbegin(); it != usages_par_annee.cend(); ++it){
+
+        cumule += it.value().*arg;
+
+        if (it.key() >= periode->Annee_debut()
+                && (it.key() - periode->Annee_debut()) % periode->Pas_de_temps() == 0
+                && it.key() < periode->Annee_fin()){
+            QPointF p;
+            p.rx() = it.key();
+            p.ry() = cumule;
+            xy.append(p);
+        }
+    }
+
+    return xy;
 }
