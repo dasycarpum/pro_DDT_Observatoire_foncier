@@ -71,6 +71,9 @@ void FenetrePrincipale::Validation_des_saisies(bool)
     if (!ui->horizontalLayout_bati_cumul->isEmpty())
         ui->horizontalLayout_bati_cumul->removeWidget(graph_bati_cumul);
     Affichage_graphique_bati_cumul(algorithme);
+    if (!ui->horizontalLayout_bati_courant->isEmpty())
+        ui->horizontalLayout_bati_courant->removeWidget(graph_bati_courant);
+    Affichage_graphique_bati_courant(algorithme);
 
 }
 
@@ -211,7 +214,7 @@ void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
 
     auto tuple = std::make_tuple(titre, usage, couleur);
 
-    for (int i(0); i < 3; ++i){
+    for (int i(0); i < titre.size(); ++i){
         QwtPlotCurve *curve = new QwtPlotCurve( std::get<0>(tuple).at(i) );
         curve->setSamples(algo->Bati_cumule( std::get<1>(tuple).at(i)) );
         curve->setCurveAttribute(QwtPlotCurve::Fitted);
@@ -227,4 +230,48 @@ void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
     /* Insertion du graphique */
     ui->horizontalLayout_bati_cumul->insertWidget(0, graph_bati_cumul);
     graph_bati_cumul->replot();
+}
+
+void FenetrePrincipale::Affichage_graphique_bati_courant(Algorithme * algo)
+{
+    /* Graphique : présentation */
+    graph_bati_courant = new QwtPlot(this);
+    graph_bati_courant->setTitle("Surfaces bâties annuellement");
+    graph_bati_courant->setAxisTitle(QwtPlot::xBottom, "Année");
+    graph_bati_courant->setAxisTitle(QwtPlot::yLeft, "Surface en hectare/an");
+    graph_bati_courant->setCanvasBackground(QBrush(QColor("#D9CCB0")));
+
+    /* Format de l'échelle */
+    EchelleTxt * x = new EchelleTxt();
+    x->setLabelRotation(-45);
+    graph_bati_courant->setAxisScaleDraw(QwtPlot::xBottom, x);
+
+    /* Grille */
+    QwtPlotGrid *grille = new QwtPlotGrid();
+    grille->setPen(QPen(Qt::darkGray, 0 , Qt::DotLine));
+    grille->attach(graph_bati_courant);
+
+    /* Courbes */
+    QVector<QString> titre = {"Habitat individuel", "Habitat collectif", "Non résidentiel"};
+    QVector<double Usage:: *> usage = {&Usage::habitat_individuel, &Usage::habitat_collectif, &Usage::non_residentiel};
+    QVector<QColor> couleur = {Qt::red, Qt::darkRed, Qt::darkMagenta};
+
+    auto tuple = std::make_tuple(titre, usage, couleur);
+
+    for (int i(0); i < titre.size(); ++i){
+        QwtPlotCurve *curve = new QwtPlotCurve( std::get<0>(tuple).at(i) );
+        curve->setSamples(algo->Bati_courant( std::get<1>(tuple).at(i)) );
+        curve->setCurveAttribute(QwtPlotCurve::Fitted);
+        curve->setPen(QColor( std::get<2>(tuple).at(i) ), 2);
+        curve->setLegendAttribute( QwtPlotCurve::LegendShowLine );
+        curve->attach(graph_bati_courant);
+    }
+
+    /* Légende */
+    QwtLegend *legend = new QwtLegend();
+    graph_bati_courant->insertLegend(legend, QwtPlot::RightLegend);
+
+    /* Insertion du graphique */
+    ui->horizontalLayout_bati_courant->insertWidget(0, graph_bati_courant);
+    graph_bati_courant->replot();
 }

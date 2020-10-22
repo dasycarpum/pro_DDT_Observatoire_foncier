@@ -54,6 +54,16 @@
              </item>
             </layout>
            </widget>
+           <widget class="QWidget" name="tab_bati_courant">
+            <attribute name="title">
+             <string>Bâti courant</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_bati_courant"/>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
         </layout>
@@ -331,7 +341,7 @@
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

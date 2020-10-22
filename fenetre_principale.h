@@ -27,6 +27,7 @@ class FenetrePrincipale : public QMainWindow
     Periode *periode;
 
     QwtPlot *graph_bati_cumul;
+    QwtPlot *graph_bati_courant;
 
 public:
     FenetrePrincipale(QWidget *parent = nullptr);
@@ -35,6 +36,7 @@ public:
     void Affichage_tableau_occupation(const Algorithme *);
     void Affichage_tableau_evolution(const Algorithme *);
     void Affichage_graphique_bati_cumul(Algorithme *);
+    void Affichage_graphique_bati_courant(Algorithme *);
 
 public slots:
     void Gestion_granularite_territoire(QAbstractButton *);

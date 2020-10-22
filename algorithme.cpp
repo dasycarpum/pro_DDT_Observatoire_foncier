@@ -104,13 +104,39 @@ QVector<QPointF> Algorithme::Bati_cumule(double Usage:: *arg)
 
         if (it.key() >= periode->Annee_debut()
                 && (it.key() - periode->Annee_debut()) % periode->Pas_de_temps() == 0
-                && it.key() < periode->Annee_fin()){
+                && it.key() <= periode->Annee_fin()){
             QPointF p;
             p.rx() = it.key();
             p.ry() = cumule;
             xy.append(p);
         }
     }
+    return xy;
+}
 
+QVector<QPointF> Algorithme::Bati_courant(double Usage:: *arg)
+{
+    QVector<QPointF> xy;
+
+    double courant(0.0);
+
+    for (QMap<int, Usage>::const_iterator it = usages_par_annee.cbegin(); it != usages_par_annee.cend(); ++it){
+
+        if (it.key() > periode->Annee_debut())
+            courant += it.value().*arg;
+        else
+            courant = it.value().*arg;
+
+        if (it.key() >= periode->Annee_debut()
+                && (it.key() - periode->Annee_debut()) % periode->Pas_de_temps() == 0
+                && it.key() <= periode->Annee_fin()){
+            QPointF p;
+            p.rx() = it.key();
+            p.ry() = courant / periode->Pas_de_temps();
+            xy.append(p);
+
+            courant = 0;
+        }
+    }
     return xy;
 }

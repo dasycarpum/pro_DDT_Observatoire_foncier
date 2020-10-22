@@ -36,6 +36,7 @@ public:
     QMap<int, Usage> Usages_par_annee(void) const {return usages_par_annee;}
 
     QVector<QPointF> Bati_cumule(double Usage::*arg);
+    QVector<QPointF> Bati_courant(double Usage::*arg);
 };
 
 #endif // ALGORITHME_H
