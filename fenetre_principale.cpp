@@ -48,6 +48,8 @@ void FenetrePrincipale::Gestion_granularite_territoire(QAbstractButton * button)
 
 void FenetrePrincipale::Validation_des_saisies(bool)
 {
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
     /* Territoire d'étude */
     QPair<QString, QString> geographie;
     geographie.second = ui->comboBox_geographie->currentText();
@@ -74,6 +76,11 @@ void FenetrePrincipale::Validation_des_saisies(bool)
     if (!ui->horizontalLayout_bati_courant->isEmpty())
         ui->horizontalLayout_bati_courant->removeWidget(graph_bati_courant);
     Affichage_graphique_bati_courant(algorithme);
+    if (!ui->horizontalLayout_conso_foncier->isEmpty())
+        ui->horizontalLayout_conso_foncier->removeWidget(graph_conso_foncier);
+    Affichage_graphique_conso_fonciere(algorithme);
+
+    QApplication::restoreOverrideCursor();
 
 }
 
@@ -194,8 +201,8 @@ void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
     graph_bati_cumul = new QwtPlot(this);
     graph_bati_cumul->setTitle("Surfaces cumulées du bâti");
     graph_bati_cumul->setAxisTitle(QwtPlot::xBottom, "Année");
-    graph_bati_cumul->setAxisTitle(QwtPlot::yLeft, "Surface en hectare");
-    graph_bati_cumul->setCanvasBackground(QBrush(QColor("#D9CCB0")));
+    graph_bati_cumul->setAxisTitle(QwtPlot::yLeft, "hectare");
+    graph_bati_cumul->setCanvasBackground(QBrush(QColor("#f5ebd5")));
 
     /* Format de l'échelle */
     EchelleTxt * x = new EchelleTxt();
@@ -238,8 +245,8 @@ void FenetrePrincipale::Affichage_graphique_bati_courant(Algorithme * algo)
     graph_bati_courant = new QwtPlot(this);
     graph_bati_courant->setTitle("Surfaces bâties annuellement");
     graph_bati_courant->setAxisTitle(QwtPlot::xBottom, "Année");
-    graph_bati_courant->setAxisTitle(QwtPlot::yLeft, "Surface en hectare/an");
-    graph_bati_courant->setCanvasBackground(QBrush(QColor("#D9CCB0")));
+    graph_bati_courant->setAxisTitle(QwtPlot::yLeft, "hectare/an");
+    graph_bati_courant->setCanvasBackground(QBrush(QColor("#f5ebd5")));
 
     /* Format de l'échelle */
     EchelleTxt * x = new EchelleTxt();
@@ -274,4 +281,51 @@ void FenetrePrincipale::Affichage_graphique_bati_courant(Algorithme * algo)
     /* Insertion du graphique */
     ui->horizontalLayout_bati_courant->insertWidget(0, graph_bati_courant);
     graph_bati_courant->replot();
+}
+
+void FenetrePrincipale::Affichage_graphique_conso_fonciere(Algorithme * algo)
+{
+    /* Graphique : présentation */
+    graph_conso_foncier = new QwtPlot(this);
+    graph_conso_foncier->setTitle("Consommation foncière");
+    graph_conso_foncier->enableAxis(QwtPlot::yRight);
+    graph_conso_foncier->setAxisTitle(QwtPlot::xBottom, "Année");
+    graph_conso_foncier->setAxisTitle(QwtPlot::yLeft, "hectare");
+    graph_conso_foncier->setAxisTitle(QwtPlot::yRight, "hectare/an");
+    graph_conso_foncier->setCanvasBackground(QBrush(QColor("#e8f5d5")));
+
+    /* Format de l'échelle */
+    EchelleTxt * x = new EchelleTxt();
+    x->setLabelRotation(-45);
+    graph_conso_foncier->setAxisScaleDraw(QwtPlot::xBottom, x);
+
+    /* Grille */
+    QwtPlotGrid *grille = new QwtPlotGrid();
+    grille->setPen(QPen(Qt::darkGray, 0 , Qt::DotLine));
+    grille->attach(graph_conso_foncier);
+
+    /* Courbes */
+    QwtPlotCurve *curve_cumul = new QwtPlotCurve( "Cumulée" );
+    QVector<QPointF> xy = algo->Conso_Foncier_Cumul();
+    curve_cumul->setSamples(xy);
+    curve_cumul->setCurveAttribute(QwtPlotCurve::Fitted);
+    curve_cumul->setPen(QColor( Qt::darkGreen ), 2);
+    curve_cumul->setLegendAttribute( QwtPlotCurve::LegendShowLine );
+    curve_cumul->attach(graph_conso_foncier);
+
+    QwtPlotCurve *curve = new QwtPlotCurve( "Courante" );
+    curve->setSamples(algo->Conso_Foncier_Courant(xy));
+    curve->setYAxis(QwtPlot::yRight);
+    curve->setCurveAttribute(QwtPlotCurve::Fitted);
+    curve->setPen(QColor( Qt::green ), 2);
+    curve->setLegendAttribute( QwtPlotCurve::LegendShowLine );
+    curve->attach(graph_conso_foncier);
+
+    /* Légende */
+    QwtLegend *legend = new QwtLegend();
+    graph_conso_foncier->insertLegend(legend, QwtPlot::RightLegend);
+
+    /* Insertion du graphique */
+    ui->horizontalLayout_conso_foncier->insertWidget(0, graph_conso_foncier);
+    graph_conso_foncier->replot();
 }

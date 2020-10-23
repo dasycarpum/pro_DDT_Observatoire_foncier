@@ -64,6 +64,16 @@
              </item>
             </layout>
            </widget>
+           <widget class="QWidget" name="tab_conso_foncier">
+            <attribute name="title">
+             <string>Consommation foncière</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_conso_foncier"/>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
         </layout>
@@ -341,7 +351,7 @@
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

@@ -37,6 +37,9 @@ public:
 
     QVector<QPointF> Bati_cumule(double Usage::*arg);
     QVector<QPointF> Bati_courant(double Usage::*arg);
+    QVector<QPointF> Conso_Foncier_Cumul(void);
+    QVector<QPointF> Conso_Foncier_Courant(QVector<QPointF> xy_cumul);
+
 };
 
 #endif // ALGORITHME_H

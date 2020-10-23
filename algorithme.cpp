@@ -140,3 +140,48 @@ QVector<QPointF> Algorithme::Bati_courant(double Usage:: *arg)
     }
     return xy;
 }
+
+QVector<QPointF> Algorithme::Conso_Foncier_Cumul(void)
+{
+    QVector<QPointF> xy;
+
+    Usage cumule; double enaf_init(0.0);
+
+    for (QMap<int, Usage>::const_iterator it = usages_par_annee.cbegin(); it != usages_par_annee.cend(); ++it){
+
+        cumule.habitat_individuel += it.value().habitat_individuel;
+        cumule.habitat_collectif += it.value().habitat_collectif;
+        cumule.non_residentiel += it.value().non_residentiel;
+
+        cumule.artificialise = (cumule.habitat_individuel + cumule.habitat_collectif + cumule.non_residentiel) / ((foncier.habitat + foncier.non_residentiel) / foncier.artificialise);
+        cumule.enaf = surface_ign / HA - cumule.artificialise;
+
+        if (it.key() == periode->Annee_debut())
+            enaf_init = cumule.enaf;
+
+        if (it.key() >= periode->Annee_debut()
+                && (it.key() - periode->Annee_debut()) % periode->Pas_de_temps() == 0
+                && it.key() <= periode->Annee_fin()){
+            QPointF p;
+            p.rx() = it.key();
+            p.ry() = enaf_init - cumule.enaf;
+            xy.append(p);
+        }
+    }
+
+    return xy;
+}
+
+QVector<QPointF> Algorithme::Conso_Foncier_Courant(QVector<QPointF> xy_cumul)
+{
+    QVector<QPointF> xy;
+
+    for (int i(1); i < xy_cumul.size(); ++i){
+        QPointF p;
+        p.rx() = xy_cumul[i].rx();
+        p.ry() = (xy_cumul[i].ry() - xy_cumul[i-1].ry()) / periode->Pas_de_temps();
+        xy.append(p);
+    }
+
+    return xy;
+}

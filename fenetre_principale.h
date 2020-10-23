@@ -28,6 +28,7 @@ class FenetrePrincipale : public QMainWindow
 
     QwtPlot *graph_bati_cumul;
     QwtPlot *graph_bati_courant;
+    QwtPlot *graph_conso_foncier;
 
 public:
     FenetrePrincipale(QWidget *parent = nullptr);
@@ -37,6 +38,7 @@ public:
     void Affichage_tableau_evolution(const Algorithme *);
     void Affichage_graphique_bati_cumul(Algorithme *);
     void Affichage_graphique_bati_courant(Algorithme *);
+    void Affichage_graphique_conso_fonciere(Algorithme *);
 
 public slots:
     void Gestion_granularite_territoire(QAbstractButton *);
