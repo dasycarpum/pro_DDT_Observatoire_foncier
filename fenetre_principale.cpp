@@ -70,18 +70,14 @@ void FenetrePrincipale::Validation_des_saisies(bool)
     Affichage_tableau_evolution(algorithme);
 
     /* Affichage des graphiques de résultats */
-    if (!ui->horizontalLayout_bati_cumul->isEmpty())
-        ui->horizontalLayout_bati_cumul->removeWidget(graph_bati_cumul);
+    Nettoyage_graphique(ui->horizontalLayout_bati_cumul);
     Affichage_graphique_bati_cumul(algorithme);
-    if (!ui->horizontalLayout_bati_courant->isEmpty())
-        ui->horizontalLayout_bati_courant->removeWidget(graph_bati_courant);
+    Nettoyage_graphique(ui->horizontalLayout_bati_courant);
     Affichage_graphique_bati_courant(algorithme);
-    if (!ui->horizontalLayout_conso_foncier->isEmpty())
-        ui->horizontalLayout_conso_foncier->removeWidget(graph_conso_foncier);
+    Nettoyage_graphique(ui->horizontalLayout_conso_foncier);
     Affichage_graphique_conso_fonciere(algorithme);
 
     QApplication::restoreOverrideCursor();
-
 }
 
 void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
@@ -194,6 +190,22 @@ class EchelleTxt : public QwtScaleDraw
         return QwtText(QString::number(value, 'f', 0));
     }
 };
+
+void FenetrePrincipale::Nettoyage_graphique(QLayout * layout)
+{
+    QLayoutItem* child;
+
+    while (layout->count() != 0){
+        child = layout->takeAt(0);
+
+        if (child->layout() != nullptr)
+            layout->removeItem(child);
+        else if (child->widget() != nullptr)
+            delete child->widget();
+
+        delete child;
+    }
+}
 
 void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
 {

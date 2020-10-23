@@ -36,6 +36,7 @@ public:
 
     void Affichage_tableau_occupation(const Algorithme *);
     void Affichage_tableau_evolution(const Algorithme *);
+    void Nettoyage_graphique(QLayout *);
     void Affichage_graphique_bati_cumul(Algorithme *);
     void Affichage_graphique_bati_courant(Algorithme *);
     void Affichage_graphique_conso_fonciere(Algorithme *);
