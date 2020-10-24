@@ -17,7 +17,7 @@ Algorithme::Algorithme(const Territoire * t, const Periode * p) : periode(p)
        ------------------------------- */
     double parcelle_cadastre(0.0), eau_cadastre(0.0), eau_BDTopo(0.0);
 
-    FichierCsv *f2 = new FichierCsv("/databank/MAJIC_2018/nonBati");
+    FichierCsv *f2 = new FichierCsv("/databank/MAJIC_" + QString::number(periode->Millesime()) + "/nonBati");
     f2->Lire();
 
     for (int i(1); i < f2->matrix.size(); ++i)
@@ -34,7 +34,7 @@ Algorithme::Algorithme(const Territoire * t, const Periode * p) : periode(p)
     /* Gestion des parcelles bâties
        ---------------------------- */
     foreach (QString const& code_INSEE, t->Liste_codes_INSEE_communes()) {
-        FichierCsv *f3 = new FichierCsv("/databank/MAJIC_2018/parcelleBatie_" + code_INSEE);
+        FichierCsv *f3 = new FichierCsv("/databank/MAJIC_" + QString::number(periode->Millesime()) + "/parcelleBatie_" + code_INSEE);
         f3->Lire();
 
         for (int i(1); i < f3->matrix.size(); ++i){
