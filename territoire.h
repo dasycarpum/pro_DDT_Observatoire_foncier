@@ -7,7 +7,7 @@
 
 #include "fichier.h"
 
-const QString DEPARTEMENT = "57";
+const QString DEPARTEMENT = "54";
 const int HA = 10000;
 
 class Territoire
