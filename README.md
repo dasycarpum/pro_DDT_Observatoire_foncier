@@ -1,20 +1,14 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Sur base des fichiers MAJIC de la DGFiP, l’application de type IHM fournit, pour un périmètre territorial donné, 2 informations :
+1. l’occupation du sol au temps t, en 2 classes distinctes : les ENAF d’un côté et les espaces artificialisés de l’autre ; ces derniers sont répartis entre bâti (logement, activité) et non bâti (infrastructures, espaces d’agrément, …)
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+2. l’évolution de l’artificialisation des sols, basée sur l’analyse de l’année de 1ère construction des parcelles, dont on déduit par rétropolation la consommation foncière (les périodes d’observations sont paramétrables).
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
-
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+# Environnement de développement
+    ▪ Langage : C++11
+    ▪ Framework : Qt (version 5.12.6)
+    ▪ IDE : Qt Creator (version 4.10.2)
+    ▪ Bibliothèque complémentaire : qwt (version 6.1.5)
+    ▪ Gestionnaire de versions du code : Git (version 2.28.0)
+    ▪ Plateforme applicative : Azure Devops sous
+         https://dev.azure.com/dasycarpum-pro-DDT/Observatoire%20du%20foncier%2054
