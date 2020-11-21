@@ -348,7 +348,32 @@ void FenetrePrincipale::Affichage_graphique_conso_fonciere(Algorithme * algo)
 
 void FenetrePrincipale::Menu_imprimer_pdf(void)
 {
-    qDebug() << "pdf";
+    /* Insertion des graphiques sous les tableaux de résultats */
+    QList<QwtPlot *> graphiques;
+    graphiques << graph_bati_cumul << graph_bati_courant << graph_conso_foncier;
+
+    foreach (QwtPlot * plot, graphiques) {
+        QwtPlotRenderer *plotRenderer = new QwtPlotRenderer();
+        QImage *image = new QImage(665, 500, QImage::Format_ARGB32_Premultiplied);
+        plotRenderer->renderTo(plot, (*image));
+
+        QTextCursor cursor = ui->textBrowser_resultat->textCursor();
+        cursor.insertText(QString("\n\n"));
+        cursor.insertImage(*image);
+    }
+
+    /* Définition du nom du fichier pdf et de son répertoire (par défaut le bureau) */
+    QString fichier = QFileDialog::getSaveFileName(this, "Enregistrer fichier pdf", QDir::homePath()+"/Desktop/" + territoire->Granularite() + "_" + territoire->Geographie().second, " PDF (*.pdf)");
+
+    /* Impression */
+    QPrinter printer;
+    printer.setPaperSize(QPrinter::A4Extra);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(fichier);
+
+    QTextDocument *document = new QTextDocument();
+    document = ui->textBrowser_resultat->document();
+    document->print(&printer);
 }
 
 void FenetrePrincipale::Menu_exporter_jpeg(void)
