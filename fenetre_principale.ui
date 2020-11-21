@@ -355,6 +355,12 @@
     </rect>
    </property>
    <widget class="QMenu" name="menu_export">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTipDuration">
+     <number>10</number>
+    </property>
     <property name="title">
      <string>Export</string>
     </property>
@@ -366,18 +372,24 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_imprimer_pdf">
    <property name="text">
-    <string>Imprimer pdf</string>
+    <string>Imprimer en pdf</string>
    </property>
    <property name="toolTip">
     <string>Impression des tableaux et graphiques</string>
    </property>
+   <property name="statusTip">
+    <string>Impression des tableaux et graphiques dans un même document pdf</string>
+   </property>
   </action>
   <action name="action_exporter_jpeg">
    <property name="text">
-    <string>Exporter jpeg</string>
+    <string>Exporter les grapiques</string>
    </property>
    <property name="toolTip">
-    <string>Export des graphiques</string>
+    <string>Export des 3 graphiques au format jpeg</string>
+   </property>
+   <property name="statusTip">
+    <string>Export des 3 graphiques au format jpeg</string>
    </property>
   </action>
  </widget>

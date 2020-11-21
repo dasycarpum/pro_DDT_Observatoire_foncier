@@ -377,6 +377,21 @@ void FenetrePrincipale::Menu_imprimer_pdf(void)
 }
 
 void FenetrePrincipale::Menu_exporter_jpeg(void)
-{
-    qDebug() << "jpeg";
+{    
+    QList<QwtPlot *> graphiques;
+    graphiques << graph_bati_cumul << graph_bati_courant << graph_conso_foncier;
+    QList<QString> noms;
+    noms << "bati_cumul" << "bati_courant" << "conso";
+
+    /* Définition du nom du fichier pdf et de son répertoire (par défaut le bureau) */
+    QString fichier = QFileDialog::getSaveFileName(this, "Enregistrer fichier jpeg", QDir::homePath()+"/Desktop/" + territoire->Granularite() + "_" + territoire->Geographie().second + "_xxx", " JPG (*.jpg)");
+
+    /* Export */
+    QwtPlotRenderer *plotRenderer = new QwtPlotRenderer();
+    for (int i(0); i < graphiques.size(); ++i){
+        QString fichier_modif(fichier);
+        fichier_modif.replace("xxx", noms.at(i));
+        plotRenderer->renderDocument(graphiques.at(i), fichier_modif, QSizeF(300, 200), 120);
+    }
+    delete plotRenderer;
 }
