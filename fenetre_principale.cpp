@@ -30,6 +30,10 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
     /* Validation des saisies utilisateur */
     connect(ui->pushButton_validation, SIGNAL(clicked(bool)), this, SLOT(Validation_des_saisies(bool)));
 
+    /* Menus */
+    connect(ui->action_imprimer_pdf, SIGNAL(triggered()), this, SLOT(Menu_imprimer_pdf()));
+    connect(ui->action_exporter_jpeg, SIGNAL(triggered()), this, SLOT(Menu_exporter_jpeg()));
+
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -340,4 +344,14 @@ void FenetrePrincipale::Affichage_graphique_conso_fonciere(Algorithme * algo)
     /* Insertion du graphique */
     ui->horizontalLayout_conso_foncier->insertWidget(0, graph_conso_foncier);
     graph_conso_foncier->replot();
+}
+
+void FenetrePrincipale::Menu_imprimer_pdf(void)
+{
+    qDebug() << "pdf";
+}
+
+void FenetrePrincipale::Menu_exporter_jpeg(void)
+{
+    qDebug() << "jpeg";
 }

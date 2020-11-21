@@ -44,6 +44,8 @@ public:
 public slots:
     void Gestion_granularite_territoire(QAbstractButton *);
     void Validation_des_saisies(bool);
+    void Menu_imprimer_pdf(void);
+    void Menu_exporter_jpeg(void);
 
 };
 #endif // FENETREPRINCIPALE_H

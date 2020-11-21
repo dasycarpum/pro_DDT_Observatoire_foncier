@@ -354,8 +354,32 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu_export">
+    <property name="title">
+     <string>Export</string>
+    </property>
+    <addaction name="action_imprimer_pdf"/>
+    <addaction name="action_exporter_jpeg"/>
+   </widget>
+   <addaction name="menu_export"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="action_imprimer_pdf">
+   <property name="text">
+    <string>Imprimer pdf</string>
+   </property>
+   <property name="toolTip">
+    <string>Impression des tableaux et graphiques</string>
+   </property>
+  </action>
+  <action name="action_exporter_jpeg">
+   <property name="text">
+    <string>Exporter jpeg</string>
+   </property>
+   <property name="toolTip">
+    <string>Export des graphiques</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
