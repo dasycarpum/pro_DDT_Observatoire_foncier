@@ -101,7 +101,7 @@ void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
     ui->textBrowser_resultat->clear();
 
     /* Titre = territoire d'étude et millésime des données */
-    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 ALIGN=center>"
+    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=640 CELLSPACING=3 ALIGN=center>"
                                                 "<TR>"
                                                     "<TD align=center><h2>%1 : %2</h2><h3>Données foncières <small>(MAJIC - DGFiP)</small> au 1<SUP>er</SUP> janvier %3</h2></TD>"
                                                 "</TR>"
@@ -111,12 +111,12 @@ void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
                                                 .arg(periode->Millesime()));
 
     /* Occupation du sol au dernier millésime de données */
-    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 align=center>"
+    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=640 CELLSPACING=3 align=center>"
                                                 "<TR>"
                                                     "<TD align=center colspan=2><h2>Occupation du sol</h2></TD>"
                                                 "</TR>"
                                                 "<TR>"
-                                                    "<TD WIDTH=360 align=center><h3><br>Surface artificialisée : %L1 ha</h3></TD>"
+                                                    "<TD WIDTH=410 align=center><h3><br>Surface artificialisée : %L1 ha</h3></TD>"
                                                     "<TD align=left><b><br>&nbsp;Bâti : %L2 ha</b>"
                                                                    "<BLOCKQUOTE>Habitat : %L3 ha</BLOCKQUOTE>"
                                                                    "<BLOCKQUOTE>Non résidentiel : %L4 ha</BLOCKQUOTE>"
@@ -141,7 +141,7 @@ void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
 void FenetrePrincipale::Affichage_tableau_evolution(const Algorithme * algo)
 {
     /* Titre et en-têtes de colonnes */
-    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 ALIGN=center>"
+    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=640 CELLSPACING=3 ALIGN=center>"
                                                  "<TR>"
                                                      "<TD align=center colspan=7><h2>Evolution de l'occupation du sol entre %1 et %2</h2></TD>"
                                                  "</TR>"
@@ -173,7 +173,7 @@ void FenetrePrincipale::Affichage_tableau_evolution(const Algorithme * algo)
             if (i == 0)
                 enaf_init = surf_cumul.enaf;
 
-            ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 ALIGN=center>"
+            ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=640 CELLSPACING=3 ALIGN=center>"
                                                          "<TR>"
                                                              "<TD WIDTH=65 align=center><b>%1</b></TD>"
                                                              "<TD WIDTH=80 align=center>%L2 ha</TD>"
