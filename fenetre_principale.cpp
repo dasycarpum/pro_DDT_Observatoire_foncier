@@ -44,6 +44,8 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
     /* Menus */
     connect(ui->action_imprimer_pdf, SIGNAL(triggered()), this, SLOT(Menu_imprimer_pdf()));
     connect(ui->action_exporter_jpeg, SIGNAL(triggered()), this, SLOT(Menu_exporter_jpeg()));
+    connect(ui->action_manuel_utilisation, SIGNAL(triggered()), this, SLOT(Menu_aide()));
+
 
 }
 
@@ -406,3 +408,18 @@ void FenetrePrincipale::Menu_exporter_jpeg(void)
     }
     delete plotRenderer;
 }
+
+void FenetrePrincipale::Menu_aide(void)
+{
+    QAction * action = qobject_cast<QAction *>(sender());
+
+    if (action->text().contains("manuel", Qt::CaseInsensitive)){
+        QUrl url("file:///databank/documentation/manuel_utilisation.pdf");
+        QUrl urlFichier = QUrl::fromLocalFile(QCoreApplication::applicationDirPath() + url.toLocalFile());
+        QDesktopServices::openUrl(urlFichier);
+    }
+    else
+        QDesktopServices::openUrl(QUrl(action->whatsThis()));
+
+}
+

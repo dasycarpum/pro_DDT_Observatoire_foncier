@@ -374,7 +374,7 @@
      <x>0</x>
      <y>0</y>
      <width>1040</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_export">
@@ -390,7 +390,14 @@
     <addaction name="action_imprimer_pdf"/>
     <addaction name="action_exporter_jpeg"/>
    </widget>
+   <widget class="QMenu" name="menuAide">
+    <property name="title">
+     <string>Aide</string>
+    </property>
+    <addaction name="action_manuel_utilisation"/>
+   </widget>
    <addaction name="menu_export"/>
+   <addaction name="menuAide"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_imprimer_pdf">
@@ -421,6 +428,15 @@
    </property>
    <property name="statusTip">
     <string>Export des 3 graphiques au format jpeg</string>
+   </property>
+  </action>
+  <action name="action_manuel_utilisation">
+   <property name="icon">
+    <iconset resource="picto.qrc">
+     <normaloff>:/release/databank/pictogramme/manuel.png</normaloff>:/release/databank/pictogramme/manuel.png</iconset>
+   </property>
+   <property name="text">
+    <string>Manuel d'utilisation</string>
    </property>
   </action>
  </widget>

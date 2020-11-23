@@ -5,6 +5,8 @@
 #include <QButtonGroup>
 #include <QFileDialog>
 #include <QPrinter>
+#include <QDesktopServices>
+
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
 #include <qwt_legend.h>
@@ -49,6 +51,7 @@ public slots:
     void Validation_des_saisies(bool);
     void Menu_imprimer_pdf(void);
     void Menu_exporter_jpeg(void);
+    void Menu_aide(void);
 
 };
 #endif // FENETREPRINCIPALE_H
