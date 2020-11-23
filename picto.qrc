@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>release/databank/pictogramme/OK.png</file>
         <file>release/databank/pictogramme/foncier.png</file>
         <file>release/databank/pictogramme/jpeg.png</file>
         <file>release/databank/pictogramme/pdf.png</file>

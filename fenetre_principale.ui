@@ -93,11 +93,34 @@
           <height>50</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
+        <property name="toolTip">
+         <string>Exécution de la requête utilisateur</string>
+        </property>
+        <property name="statusTip">
+         <string>Exécution de la requête utilisateur</string>
+        </property>
         <property name="text">
          <string>Validation</string>
+        </property>
+        <property name="icon">
+         <iconset resource="picto.qrc">
+          <normaloff>:/release/databank/pictogramme/OK.png</normaloff>:/release/databank/pictogramme/OK.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>36</width>
+          <height>36</height>
+         </size>
         </property>
        </widget>
       </item>

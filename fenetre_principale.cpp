@@ -7,6 +7,17 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
 {
     ui->setupUi(this);
 
+    /* Style */
+    ui->groupBox_periode->setObjectName("box");
+    ui->groupBox_periode->setStyleSheet("QGroupBox#box { font-weight:bold }");
+    ui->groupBox_territoire->setObjectName("box");
+    ui->groupBox_territoire->setStyleSheet("QGroupBox#box { font-weight:bold }");
+    ui->groupBox_resultat->setObjectName("box");
+    ui->groupBox_resultat->setStyleSheet("QGroupBox#box { font-weight:bold }");
+
+    QPalette palette; palette.setColor(QPalette::Button, QColor(177, 171, 160));
+    ui->pushButton_validation->setPalette(palette);
+
     /* Granularités territoriales : commune, EPCI, SCoT, département */
     grp_granularite = new QButtonGroup(ui->groupBox_territoire);
     grp_granularite->addButton(ui->radioButton_commune);
@@ -218,7 +229,7 @@ void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
     graph_bati_cumul->setTitle("Surfaces cumulées du bâti");
     graph_bati_cumul->setAxisTitle(QwtPlot::xBottom, "Année");
     graph_bati_cumul->setAxisTitle(QwtPlot::yLeft, "hectare");
-    graph_bati_cumul->setCanvasBackground(QBrush(QColor("#f5ebd5")));
+    graph_bati_cumul->setCanvasBackground(QBrush(QColor("#d7d0c3")));
 
     /* Format de l'échelle */
     EchelleTxt * x = new EchelleTxt();
@@ -262,7 +273,7 @@ void FenetrePrincipale::Affichage_graphique_bati_courant(Algorithme * algo)
     graph_bati_courant->setTitle("Surfaces bâties annuellement");
     graph_bati_courant->setAxisTitle(QwtPlot::xBottom, "Année");
     graph_bati_courant->setAxisTitle(QwtPlot::yLeft, "hectare/an");
-    graph_bati_courant->setCanvasBackground(QBrush(QColor("#f5ebd5")));
+    graph_bati_courant->setCanvasBackground(QBrush(QColor("#d7d0c3")));
 
     /* Format de l'échelle */
     EchelleTxt * x = new EchelleTxt();
@@ -308,7 +319,7 @@ void FenetrePrincipale::Affichage_graphique_conso_fonciere(Algorithme * algo)
     graph_conso_foncier->setAxisTitle(QwtPlot::xBottom, "Année");
     graph_conso_foncier->setAxisTitle(QwtPlot::yLeft, "hectare");
     graph_conso_foncier->setAxisTitle(QwtPlot::yRight, "hectare/an");
-    graph_conso_foncier->setCanvasBackground(QBrush(QColor("#e8f5d5")));
+    graph_conso_foncier->setCanvasBackground(QBrush(QColor("#b1aba0")));
 
     /* Format de l'échelle */
     EchelleTxt * x = new EchelleTxt();
