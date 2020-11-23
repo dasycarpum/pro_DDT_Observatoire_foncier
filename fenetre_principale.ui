@@ -371,6 +371,10 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_imprimer_pdf">
+   <property name="icon">
+    <iconset resource="picto.qrc">
+     <normaloff>:/release/databank/pictogramme/pdf.png</normaloff>:/release/databank/pictogramme/pdf.png</iconset>
+   </property>
    <property name="text">
     <string>Imprimer en pdf</string>
    </property>
@@ -382,6 +386,10 @@
    </property>
   </action>
   <action name="action_exporter_jpeg">
+   <property name="icon">
+    <iconset resource="picto.qrc">
+     <normaloff>:/release/databank/pictogramme/jpeg.png</normaloff>:/release/databank/pictogramme/jpeg.png</iconset>
+   </property>
    <property name="text">
     <string>Exporter les grapiques</string>
    </property>
@@ -393,6 +401,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="picto.qrc"/>
+ </resources>
  <connections/>
 </ui>
