@@ -45,8 +45,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
     connect(ui->action_imprimer_pdf, SIGNAL(triggered()), this, SLOT(Menu_imprimer_pdf()));
     connect(ui->action_exporter_jpeg, SIGNAL(triggered()), this, SLOT(Menu_exporter_jpeg()));
     connect(ui->action_manuel_utilisation, SIGNAL(triggered()), this, SLOT(Menu_aide()));
-
-
+    connect(ui->action_methodologie, SIGNAL(triggered()), this, SLOT(Menu_aide()));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -413,13 +412,17 @@ void FenetrePrincipale::Menu_aide(void)
 {
     QAction * action = qobject_cast<QAction *>(sender());
 
-    if (action->text().contains("manuel", Qt::CaseInsensitive)){
-        QUrl url("file:///databank/documentation/manuel_utilisation.pdf");
-        QUrl urlFichier = QUrl::fromLocalFile(QCoreApplication::applicationDirPath() + url.toLocalFile());
-        QDesktopServices::openUrl(urlFichier);
-    }
+    QUrl url;
+    if (action->text().contains("manuel", Qt::CaseInsensitive))
+        url.setUrl("file:///databank/documentation/manuel_utilisation.pdf");
+    else if (action->text().contains("méthode", Qt::CaseInsensitive))
+        url.setUrl("file:///databank/documentation/methode.pdf");
     else
         QDesktopServices::openUrl(QUrl(action->whatsThis()));
 
+    if (!url.isEmpty()){
+        QUrl url_fichier = QUrl::fromLocalFile(QCoreApplication::applicationDirPath() + url.toLocalFile());
+        QDesktopServices::openUrl(url_fichier);
+    }
 }
 

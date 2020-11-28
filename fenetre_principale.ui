@@ -395,6 +395,7 @@
      <string>Aide</string>
     </property>
     <addaction name="action_manuel_utilisation"/>
+    <addaction name="action_methodologie"/>
    </widget>
    <addaction name="menu_export"/>
    <addaction name="menuAide"/>
@@ -437,6 +438,18 @@
    </property>
    <property name="text">
     <string>Manuel d'utilisation</string>
+   </property>
+  </action>
+  <action name="action_methodologie">
+   <property name="icon">
+    <iconset resource="picto.qrc">
+     <normaloff>:/release/databank/pictogramme/methodologie.png</normaloff>:/release/databank/pictogramme/methodologie.png</iconset>
+   </property>
+   <property name="text">
+    <string>Méthode d'analyse</string>
+   </property>
+   <property name="toolTip">
+    <string>Méthode d'analyse des données</string>
    </property>
   </action>
  </widget>
