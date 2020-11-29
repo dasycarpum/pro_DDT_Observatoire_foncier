@@ -17,6 +17,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
 
     QPalette palette; palette.setColor(QPalette::Button, QColor(177, 171, 160));
     ui->pushButton_validation->setPalette(palette);
+    ui->pushButton_cartographie->setPalette(palette);
 
     /* Granularités territoriales : commune, EPCI, SCoT, département */
     grp_granularite = new QButtonGroup(ui->groupBox_territoire);
@@ -40,6 +41,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
 
     /* Validation des saisies utilisateur */
     connect(ui->pushButton_validation, SIGNAL(clicked(bool)), this, SLOT(Validation_des_saisies(bool)));
+    connect(ui->pushButton_cartographie, SIGNAL(clicked(bool)), this, SLOT(Cartographie(bool)));
 
     /* Menus */
     connect(ui->action_imprimer_pdf, SIGNAL(triggered()), this, SLOT(Menu_imprimer_pdf()));
@@ -356,6 +358,11 @@ void FenetrePrincipale::Affichage_graphique_conso_fonciere(Algorithme * algo)
     /* Insertion du graphique */
     ui->horizontalLayout_conso_foncier->insertWidget(0, graph_conso_foncier);
     graph_conso_foncier->replot();
+}
+
+void FenetrePrincipale::Cartographie(bool)
+{
+    qDebug() << "OK";
 }
 
 void FenetrePrincipale::Menu_imprimer_pdf(void)
