@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include <QPrinter>
 #include <QDesktopServices>
+#include <QProcess>
 
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>

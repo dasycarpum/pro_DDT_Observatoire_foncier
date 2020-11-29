@@ -95,6 +95,9 @@ void FenetrePrincipale::Validation_des_saisies(bool)
     Nettoyage_graphique(ui->horizontalLayout_conso_foncier);
     Affichage_graphique_conso_fonciere(algorithme);
 
+    /* Cartographie */
+    ui->pushButton_cartographie->setEnabled(true);
+
     QApplication::restoreOverrideCursor();
 }
 
@@ -362,7 +365,11 @@ void FenetrePrincipale::Affichage_graphique_conso_fonciere(Algorithme * algo)
 
 void FenetrePrincipale::Cartographie(bool)
 {
-    qDebug() << "OK";
+    /* Exécution de QGiS */
+    QProcess *process = new QProcess(this);
+    QString chemin = QDir::toNativeSeparators(QCoreApplication::applicationDirPath())+ "\\QGiS_3.4.5\\usbgis\\apps\\qgis\\bin\\";
+    process->setWorkingDirectory(chemin);
+    process->start(chemin + "qgis-ltr.bat", QStringList());
 }
 
 void FenetrePrincipale::Menu_imprimer_pdf(void)
