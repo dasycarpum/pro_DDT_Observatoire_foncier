@@ -363,8 +363,60 @@ void FenetrePrincipale::Affichage_graphique_conso_fonciere(Algorithme * algo)
     graph_conso_foncier->replot();
 }
 
+void Customisation_projet_QGiS(const Territoire * territoire)
+{
+    QDir repertoire("C:\\temp");
+    if (!repertoire.exists())
+        repertoire.mkdir("C:\\temp");
+
+    QString chemin = "C:/temp/qgis_projet_custom.py";
+
+    QFile fichier(chemin);
+    if (!fichier.open(QIODevice::WriteOnly))
+        qDebug() << chemin;
+
+    QTextStream texte(&fichier);
+
+    /* Bibliothèques */
+    texte << "from qgis.utils import iface" << endl;
+    texte << "from qgis.core import *" << endl;
+    texte << "from PyQt5.QtGui import QColor" << endl;
+
+    /* Message d'accueil */
+    texte << "iface.messageBar().pushMessage(\"DDT 57\", \"Bienvenue sur le projet d'observatoire du foncier...\")" << endl;
+    /* Ouverture du projet */
+    texte << "qgs = QgsApplication([], False)" << endl;
+    texte << "qgs.initQgis()" << endl;
+    texte << "project = QgsProject.instance()" << endl;
+    texte << "project.read(\"" + QCoreApplication::applicationDirPath() + "/databank/cartographie/projet_qgis.qgz\")" << endl;
+    /* Vue carto localisée sur le secteur géographique de la station hydro */
+    texte << "qgis.utils.iface.mapCanvas().setExtent(QgsRectangle(" << territoire->Emprise_communale().second[0] << ","
+                                                                    << territoire->Emprise_communale().second[1] << ","
+                                                                    << territoire->Emprise_communale().second[2] << ","
+                                                                    << territoire->Emprise_communale().second[3] << "))" << endl;
+    /* Projection = Lambert 93 Bornes Europe = EPSG 2154 */
+    texte << "lambert93 = QgsCoordinateReferenceSystem(2154, QgsCoordinateReferenceSystem.PostgisCrsId)\n"
+             "qgis.utils.iface.mapCanvas().setDestinationCrs(lambert93)" << endl;
+    /* Référentiels WMS */
+    texte << QString("uri = 'crs=EPSG:2154&featureCount=10&format=image/png&layers=default&styles=&url=https://osm.geograndest.fr/mapcache/'") << endl;
+    texte << QString("qgis.utils.iface.addRasterLayer(uri, 'Open Street Map', 'wms')") << endl;
+    /* Couches SIG de type vecteur (parcelles du pnb10) */
+    texte << QString("couche=iface.addVectorLayer(\"" + QCoreApplication::applicationDirPath() + "/databank/cartographie/pnb10_parcelle/d"+ DEPARTEMENT + "_fftp_2019_pnb10_parcelle_nlocal.shp\", \"pnb10_parcelle\",\"ogr\")") << endl;
+    /* Sélection des parcelles contenant moins d'1 local par ha, pour un affichage transparent */
+    texte << QString("couche.selectByExpression(\"\\\"loc_par_ha\\\"<1\")") << endl;
+    texte << QString("iface.mapCanvas().setSelectionColor(QColor(\"transparent\"))") << endl;
+    /* Finalisation */
+    texte << "qgis.utils.iface.mapCanvas().refresh()";
+
+    fichier.close();
+}
+
 void FenetrePrincipale::Cartographie(bool)
 {
+    /* Customisation du projet QGiS */
+    territoire->Evaluation_emprise_communale();
+    Customisation_projet_QGiS(territoire);
+
     /* Exécution de QGiS */
     QProcess *process = new QProcess(this);
     QString chemin = QDir::toNativeSeparators(QCoreApplication::applicationDirPath())+ "\\QGiS_3.4.5\\usbgis\\apps\\qgis\\bin\\";
