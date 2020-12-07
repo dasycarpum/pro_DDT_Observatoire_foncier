@@ -29,6 +29,7 @@ class FenetrePrincipale : public QMainWindow
     Ui::FenetrePrincipale *ui;
 
     Territoire *territoire;
+    QButtonGroup *grp_departement;
     QButtonGroup *grp_granularite;
     Periode *periode;
 

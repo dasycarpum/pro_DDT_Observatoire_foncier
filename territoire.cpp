@@ -1,6 +1,6 @@
 #include "territoire.h"
 
-Territoire::Territoire(QString const& gra, QPair<QString, QString> const& geo) : granularite(gra), geographie(geo)
+Territoire::Territoire(QString const& dep, QString const& gra, QPair<QString, QString> const& geo) : departement(dep), granularite(gra), geographie(geo)
 {
     if (geographie.first.isEmpty()){
 
@@ -25,14 +25,14 @@ Territoire::Territoire(QString const& gra, QPair<QString, QString> const& geo) :
         cl->Lire();
 
         for (int i(1); i < cl->matrix.size(); ++i)
-            if (cl->matrix[i][champ_cod_dep] == DEPARTEMENT && cl->matrix[i][champ_lib_geo] == geographie.second)
+            if (cl->matrix[i][champ_cod_dep] == departement && cl->matrix[i][champ_lib_geo] == geographie.second)
                 liste_codes_INSEE_communes.append(cl->matrix[i][champ_cod_com]);
 
         delete cl;   
     }
 }
 
-QStringList Territoire::Liste_libelles_geographies(QString const& granularite)
+QStringList Territoire::Liste_libelles_geographies(QString const& departement, QString const& granularite)
 {
     QMap<QString, bool> liste_libelle;
 
@@ -55,11 +55,10 @@ QStringList Territoire::Liste_libelles_geographies(QString const& granularite)
     cl->Lire();
 
     for (int i(1); i < cl->matrix.size(); ++i)
-        if (cl->matrix[i][champ_cod_dep] == DEPARTEMENT)
+        if (cl->matrix[i][champ_cod_dep] == departement)
             liste_libelle[cl->matrix[i][champ_lib_geo]] = true;
 
     delete cl;
-
 
     return liste_libelle.keys();
 }
@@ -73,12 +72,12 @@ void Territoire::Evaluation_emprise_communale(void)
         emprise_communale.first.insert(commune);
 
     /* Coordonnées XY du rectangle d'emprise */
-    FichierCsv *fc = new FichierCsv("/databank/cartographie/localisation/communes_XY_" + DEPARTEMENT);
+    FichierCsv *fc = new FichierCsv("/databank/cartographie/localisation/communes_XY_" + departement);
     fc->Lire();
 
-    if (DEPARTEMENT == "57")
+    if (departement == "57")
         emprise_communale.second << 1032594 << 6937459 << 913391 << 6843314;
-    else if (DEPARTEMENT == "54")
+    else if (departement == "54")
         emprise_communale.second << 1001188 << 6940350 << 879195 << 6812182;
 
     for (int i(1); i < fc->matrix.size(); ++i)

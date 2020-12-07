@@ -19,6 +19,13 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
     ui->pushButton_validation->setPalette(palette);
     ui->pushButton_cartographie->setPalette(palette);
 
+    /* Départements : 54 ou 57 */
+    grp_departement = new QButtonGroup(ui->groupBox_departement);
+    grp_departement->setExclusive(true);
+    grp_departement->addButton(ui->checkBox_54);
+    grp_departement->addButton(ui->checkBox_57);
+    connect(grp_departement, SIGNAL(buttonClicked(QAbstractButton *)), this, SLOT(Gestion_granularite_territoire(QAbstractButton *)));
+
     /* Granularités territoriales : commune, EPCI, SCoT, département */
     grp_granularite = new QButtonGroup(ui->groupBox_territoire);
     grp_granularite->addButton(ui->radioButton_commune);
@@ -59,9 +66,16 @@ FenetrePrincipale::~FenetrePrincipale()
 
 void FenetrePrincipale::Gestion_granularite_territoire(QAbstractButton * button)
 {
-    ui->comboBox_geographie->clear();
-    QStringList liste_geographies = Territoire::Liste_libelles_geographies(button->text());
-    ui->comboBox_geographie->addItems(liste_geographies);
+    if (button->group() == grp_departement){
+        ui->radioButton_commune->setChecked(true);
+        Gestion_granularite_territoire(ui->radioButton_commune);
+    }
+    else {
+        ui->comboBox_geographie->clear();
+        QStringList liste_geographies = Territoire::Liste_libelles_geographies(grp_departement->button(grp_departement->checkedId())->text().left(2),
+                                                                           button->text());
+        ui->comboBox_geographie->addItems(liste_geographies);
+    }
 }
 
 void FenetrePrincipale::Validation_des_saisies(bool)
@@ -71,7 +85,9 @@ void FenetrePrincipale::Validation_des_saisies(bool)
     /* Territoire d'étude */
     QPair<QString, QString> geographie;
     geographie.second = ui->comboBox_geographie->currentText();
-    territoire = new Territoire(grp_granularite->button(grp_granularite->checkedId())->text(), geographie);
+    territoire = new Territoire(grp_departement->button(grp_departement->checkedId())->text().left(2),
+                                grp_granularite->button(grp_granularite->checkedId())->text(),
+                                geographie);
 
     /* Période d'observation */
     periode = new Periode();
@@ -401,7 +417,7 @@ void Customisation_projet_QGiS(const Territoire * territoire)
     texte << QString("uri = 'crs=EPSG:2154&featureCount=10&format=image/png&layers=default&styles=&url=https://osm.geograndest.fr/mapcache/'") << endl;
     texte << QString("qgis.utils.iface.addRasterLayer(uri, 'Open Street Map', 'wms')") << endl;
     /* Couches SIG de type vecteur (parcelles du pnb10) */
-    texte << QString("couche=iface.addVectorLayer(\"" + QCoreApplication::applicationDirPath() + "/databank/cartographie/pnb10_parcelle/d"+ DEPARTEMENT + "_fftp_2019_pnb10_parcelle_nlocal.shp\", \"pnb10_parcelle\",\"ogr\")") << endl;
+    texte << QString("couche=iface.addVectorLayer(\"" + QCoreApplication::applicationDirPath() + "/databank/cartographie/pnb10_parcelle/d"+ territoire->Departement() + "_fftp_2019_pnb10_parcelle_nlocal.shp\", \"pnb10_parcelle\",\"ogr\")") << endl;
     /* Sélection des parcelles contenant moins d'1 local par ha, pour un affichage transparent */
     texte << QString("couche.selectByExpression(\"\\\"loc_par_ha\\\"<1\")") << endl;
     texte << QString("iface.mapCanvas().setSelectionColor(QColor(\"transparent\"))") << endl;
