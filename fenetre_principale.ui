@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>966</width>
+    <width>1040</width>
     <height>672</height>
    </rect>
   </property>
@@ -23,173 +23,18 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout_global">
-      <item row="0" column="1" rowspan="5">
-       <widget class="QGroupBox" name="groupBox_resultat">
-        <property name="title">
-         <string>Résultats de l'analyse</string>
+      <item row="3" column="0">
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QTabWidget" name="tabWidget_resultat">
-           <property name="currentIndex">
-            <number>0</number>
-           </property>
-           <widget class="QWidget" name="tab_tableau">
-            <attribute name="title">
-             <string>Tableaux</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <item>
-              <widget class="QTextBrowser" name="textBrowser_resultat"/>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="tab_bati_cumul">
-            <attribute name="title">
-             <string>Bâti cumulé</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_bati_cumul"/>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="tab_bati_courant">
-            <attribute name="title">
-             <string>Bâti courant</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_5">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_bati_courant"/>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="tab_conso_foncier">
-            <attribute name="title">
-             <string>Consommation foncière</string>
-            </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_6">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_conso_foncier"/>
-             </item>
-            </layout>
-           </widget>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QPushButton" name="pushButton_validation">
-        <property name="minimumSize">
+        <property name="sizeHint" stdset="0">
          <size>
-          <width>0</width>
-          <height>50</height>
+          <width>20</width>
+          <height>40</height>
          </size>
         </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>50</height>
-         </size>
-        </property>
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="text">
-         <string>Validation</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QGroupBox" name="groupBox_periode">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>150</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>150</height>
-         </size>
-        </property>
-        <property name="title">
-         <string>Période d'observation</string>
-        </property>
-        <layout class="QFormLayout" name="formLayout_2">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_an_debut">
-           <property name="text">
-            <string>Année de début :</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QSpinBox" name="spinBox_an_debut">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="minimum">
-            <number>1948</number>
-           </property>
-           <property name="maximum">
-            <number>2100</number>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_an_fin">
-           <property name="text">
-            <string>Année de fin :</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QSpinBox" name="spinBox_an_fin">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="minimum">
-            <number>1949</number>
-           </property>
-           <property name="maximum">
-            <number>2100</number>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_an_pas">
-           <property name="text">
-            <string>Pas de temps :</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QSpinBox" name="spinBox_an_pas">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>10</number>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       </spacer>
       </item>
       <item row="0" column="0">
        <widget class="QGroupBox" name="groupBox_territoire">
@@ -315,6 +160,152 @@
         </layout>
        </widget>
       </item>
+      <item row="0" column="1" rowspan="7">
+       <widget class="QGroupBox" name="groupBox_resultat">
+        <property name="title">
+         <string>Résultats de l'analyse</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QTabWidget" name="tabWidget_resultat">
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <widget class="QWidget" name="tab_tableau">
+            <attribute name="title">
+             <string>Tableaux</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QTextBrowser" name="textBrowser_resultat"/>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="tab_bati_cumul">
+            <attribute name="title">
+             <string>Bâti cumulé</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_bati_cumul"/>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="tab_bati_courant">
+            <attribute name="title">
+             <string>Bâti courant</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_bati_courant"/>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="tab_conso_foncier">
+            <attribute name="title">
+             <string>Consommation foncière</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_conso_foncier"/>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QGroupBox" name="groupBox_periode">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>150</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>150</height>
+         </size>
+        </property>
+        <property name="title">
+         <string>Période d'observation</string>
+        </property>
+        <layout class="QFormLayout" name="formLayout_2">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_an_debut">
+           <property name="text">
+            <string>Année de début :</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="spinBox_an_debut">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="minimum">
+            <number>1948</number>
+           </property>
+           <property name="maximum">
+            <number>2100</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_an_fin">
+           <property name="text">
+            <string>Année de fin :</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="spinBox_an_fin">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="minimum">
+            <number>1949</number>
+           </property>
+           <property name="maximum">
+            <number>2100</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_an_pas">
+           <property name="text">
+            <string>Pas de temps :</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QSpinBox" name="spinBox_an_pas">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>10</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
       <item row="1" column="0">
        <spacer name="verticalSpacer_1">
         <property name="orientation">
@@ -328,18 +319,78 @@
         </property>
        </spacer>
       </item>
-      <item row="3" column="0">
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+      <item row="5" column="0">
+       <widget class="QPushButton" name="pushButton_cartographie">
+        <property name="enabled">
+         <bool>false</bool>
         </property>
-        <property name="sizeHint" stdset="0">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>Cartographie</string>
+        </property>
+        <property name="icon">
+         <iconset resource="picto.qrc">
+          <normaloff>:/release/databank/pictogramme/qgis.png</normaloff>:/release/databank/pictogramme/qgis.png</iconset>
+        </property>
+        <property name="iconSize">
          <size>
-          <width>20</width>
-          <height>40</height>
+          <width>32</width>
+          <height>32</height>
          </size>
         </property>
-       </spacer>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QPushButton" name="pushButton_validation">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="toolTip">
+         <string>Exécution de la requête utilisateur</string>
+        </property>
+        <property name="statusTip">
+         <string>Exécution de la requête utilisateur</string>
+        </property>
+        <property name="text">
+         <string>Validation</string>
+        </property>
+        <property name="icon">
+         <iconset resource="picto.qrc">
+          <normaloff>:/release/databank/pictogramme/OK.png</normaloff>:/release/databank/pictogramme/OK.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>36</width>
+          <height>36</height>
+         </size>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -350,13 +401,88 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>966</width>
+     <width>1040</width>
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu_export">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTipDuration">
+     <number>10</number>
+    </property>
+    <property name="title">
+     <string>Export</string>
+    </property>
+    <addaction name="action_imprimer_pdf"/>
+    <addaction name="action_exporter_jpeg"/>
+   </widget>
+   <widget class="QMenu" name="menuAide">
+    <property name="title">
+     <string>Aide</string>
+    </property>
+    <addaction name="action_manuel_utilisation"/>
+    <addaction name="action_methodologie"/>
+   </widget>
+   <addaction name="menu_export"/>
+   <addaction name="menuAide"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="action_imprimer_pdf">
+   <property name="icon">
+    <iconset resource="picto.qrc">
+     <normaloff>:/release/databank/pictogramme/pdf.png</normaloff>:/release/databank/pictogramme/pdf.png</iconset>
+   </property>
+   <property name="text">
+    <string>Imprimer en pdf</string>
+   </property>
+   <property name="toolTip">
+    <string>Impression des tableaux et graphiques</string>
+   </property>
+   <property name="statusTip">
+    <string>Impression des tableaux et graphiques dans un même document pdf</string>
+   </property>
+  </action>
+  <action name="action_exporter_jpeg">
+   <property name="icon">
+    <iconset resource="picto.qrc">
+     <normaloff>:/release/databank/pictogramme/jpeg.png</normaloff>:/release/databank/pictogramme/jpeg.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exporter les grapiques</string>
+   </property>
+   <property name="toolTip">
+    <string>Export des 3 graphiques au format jpeg</string>
+   </property>
+   <property name="statusTip">
+    <string>Export des 3 graphiques au format jpeg</string>
+   </property>
+  </action>
+  <action name="action_manuel_utilisation">
+   <property name="icon">
+    <iconset resource="picto.qrc">
+     <normaloff>:/release/databank/pictogramme/manuel.png</normaloff>:/release/databank/pictogramme/manuel.png</iconset>
+   </property>
+   <property name="text">
+    <string>Manuel d'utilisation</string>
+   </property>
+  </action>
+  <action name="action_methodologie">
+   <property name="icon">
+    <iconset resource="picto.qrc">
+     <normaloff>:/release/databank/pictogramme/methodologie.png</normaloff>:/release/databank/pictogramme/methodologie.png</iconset>
+   </property>
+   <property name="text">
+    <string>Méthode d'analyse</string>
+   </property>
+   <property name="toolTip">
+    <string>Méthode d'analyse des données</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="picto.qrc"/>
+ </resources>
  <connections/>
 </ui>

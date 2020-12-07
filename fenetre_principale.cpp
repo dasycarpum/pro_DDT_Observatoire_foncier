@@ -7,6 +7,18 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
 {
     ui->setupUi(this);
 
+    /* Style */
+    ui->groupBox_periode->setObjectName("box");
+    ui->groupBox_periode->setStyleSheet("QGroupBox#box { font-weight:bold }");
+    ui->groupBox_territoire->setObjectName("box");
+    ui->groupBox_territoire->setStyleSheet("QGroupBox#box { font-weight:bold }");
+    ui->groupBox_resultat->setObjectName("box");
+    ui->groupBox_resultat->setStyleSheet("QGroupBox#box { font-weight:bold }");
+
+    QPalette palette; palette.setColor(QPalette::Button, QColor(177, 171, 160));
+    ui->pushButton_validation->setPalette(palette);
+    ui->pushButton_cartographie->setPalette(palette);
+
     /* Granularités territoriales : commune, EPCI, SCoT, département */
     grp_granularite = new QButtonGroup(ui->groupBox_territoire);
     grp_granularite->addButton(ui->radioButton_commune);
@@ -29,7 +41,13 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
 
     /* Validation des saisies utilisateur */
     connect(ui->pushButton_validation, SIGNAL(clicked(bool)), this, SLOT(Validation_des_saisies(bool)));
+    connect(ui->pushButton_cartographie, SIGNAL(clicked(bool)), this, SLOT(Cartographie(bool)));
 
+    /* Menus */
+    connect(ui->action_imprimer_pdf, SIGNAL(triggered()), this, SLOT(Menu_imprimer_pdf()));
+    connect(ui->action_exporter_jpeg, SIGNAL(triggered()), this, SLOT(Menu_exporter_jpeg()));
+    connect(ui->action_manuel_utilisation, SIGNAL(triggered()), this, SLOT(Menu_aide()));
+    connect(ui->action_methodologie, SIGNAL(triggered()), this, SLOT(Menu_aide()));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -77,6 +95,9 @@ void FenetrePrincipale::Validation_des_saisies(bool)
     Nettoyage_graphique(ui->horizontalLayout_conso_foncier);
     Affichage_graphique_conso_fonciere(algorithme);
 
+    /* Cartographie */
+    ui->pushButton_cartographie->setEnabled(true);
+
     QApplication::restoreOverrideCursor();
 }
 
@@ -86,7 +107,7 @@ void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
     ui->textBrowser_resultat->clear();
 
     /* Titre = territoire d'étude et millésime des données */
-    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 ALIGN=center>"
+    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=640 CELLSPACING=3 ALIGN=center>"
                                                 "<TR>"
                                                     "<TD align=center><h2>%1 : %2</h2><h3>Données foncières <small>(MAJIC - DGFiP)</small> au 1<SUP>er</SUP> janvier %3</h2></TD>"
                                                 "</TR>"
@@ -96,12 +117,12 @@ void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
                                                 .arg(periode->Millesime()));
 
     /* Occupation du sol au dernier millésime de données */
-    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 align=center>"
+    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=640 CELLSPACING=3 align=center>"
                                                 "<TR>"
                                                     "<TD align=center colspan=2><h2>Occupation du sol</h2></TD>"
                                                 "</TR>"
                                                 "<TR>"
-                                                    "<TD WIDTH=360 align=center><h3><br>Surface artificialisée : %L1 ha</h3></TD>"
+                                                    "<TD WIDTH=410 align=center><h3><br>Surface artificialisée : %L1 ha</h3></TD>"
                                                     "<TD align=left><b><br>&nbsp;Bâti : %L2 ha</b>"
                                                                    "<BLOCKQUOTE>Habitat : %L3 ha</BLOCKQUOTE>"
                                                                    "<BLOCKQUOTE>Non résidentiel : %L4 ha</BLOCKQUOTE>"
@@ -126,7 +147,7 @@ void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
 void FenetrePrincipale::Affichage_tableau_evolution(const Algorithme * algo)
 {
     /* Titre et en-têtes de colonnes */
-    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 ALIGN=center>"
+    ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=640 CELLSPACING=3 ALIGN=center>"
                                                  "<TR>"
                                                      "<TD align=center colspan=7><h2>Evolution de l'occupation du sol entre %1 et %2</h2></TD>"
                                                  "</TR>"
@@ -158,7 +179,7 @@ void FenetrePrincipale::Affichage_tableau_evolution(const Algorithme * algo)
             if (i == 0)
                 enaf_init = surf_cumul.enaf;
 
-            ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=600 CELLSPACING=3 ALIGN=center>"
+            ui->textBrowser_resultat->append(QString("<TABLE BORDER WIDTH=640 CELLSPACING=3 ALIGN=center>"
                                                          "<TR>"
                                                              "<TD WIDTH=65 align=center><b>%1</b></TD>"
                                                              "<TD WIDTH=80 align=center>%L2 ha</TD>"
@@ -214,7 +235,7 @@ void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
     graph_bati_cumul->setTitle("Surfaces cumulées du bâti");
     graph_bati_cumul->setAxisTitle(QwtPlot::xBottom, "Année");
     graph_bati_cumul->setAxisTitle(QwtPlot::yLeft, "hectare");
-    graph_bati_cumul->setCanvasBackground(QBrush(QColor("#f5ebd5")));
+    graph_bati_cumul->setCanvasBackground(QBrush(QColor("#d7d0c3")));
 
     /* Format de l'échelle */
     EchelleTxt * x = new EchelleTxt();
@@ -258,7 +279,7 @@ void FenetrePrincipale::Affichage_graphique_bati_courant(Algorithme * algo)
     graph_bati_courant->setTitle("Surfaces bâties annuellement");
     graph_bati_courant->setAxisTitle(QwtPlot::xBottom, "Année");
     graph_bati_courant->setAxisTitle(QwtPlot::yLeft, "hectare/an");
-    graph_bati_courant->setCanvasBackground(QBrush(QColor("#f5ebd5")));
+    graph_bati_courant->setCanvasBackground(QBrush(QColor("#d7d0c3")));
 
     /* Format de l'échelle */
     EchelleTxt * x = new EchelleTxt();
@@ -304,7 +325,7 @@ void FenetrePrincipale::Affichage_graphique_conso_fonciere(Algorithme * algo)
     graph_conso_foncier->setAxisTitle(QwtPlot::xBottom, "Année");
     graph_conso_foncier->setAxisTitle(QwtPlot::yLeft, "hectare");
     graph_conso_foncier->setAxisTitle(QwtPlot::yRight, "hectare/an");
-    graph_conso_foncier->setCanvasBackground(QBrush(QColor("#e8f5d5")));
+    graph_conso_foncier->setCanvasBackground(QBrush(QColor("#b1aba0")));
 
     /* Format de l'échelle */
     EchelleTxt * x = new EchelleTxt();
@@ -341,3 +362,133 @@ void FenetrePrincipale::Affichage_graphique_conso_fonciere(Algorithme * algo)
     ui->horizontalLayout_conso_foncier->insertWidget(0, graph_conso_foncier);
     graph_conso_foncier->replot();
 }
+
+void Customisation_projet_QGiS(const Territoire * territoire)
+{
+    QDir repertoire("C:\\temp");
+    if (!repertoire.exists())
+        repertoire.mkdir("C:\\temp");
+
+    QString chemin = "C:/temp/qgis_projet_custom.py";
+
+    QFile fichier(chemin);
+    if (!fichier.open(QIODevice::WriteOnly))
+        qDebug() << chemin;
+
+    QTextStream texte(&fichier);
+
+    /* Bibliothèques */
+    texte << "from qgis.utils import iface" << endl;
+    texte << "from qgis.core import *" << endl;
+    texte << "from PyQt5.QtGui import QColor" << endl;
+
+    /* Message d'accueil */
+    texte << "iface.messageBar().pushMessage(\"DDT 57\", \"Bienvenue sur le projet d'observatoire du foncier...\")" << endl;
+    /* Ouverture du projet */
+    texte << "qgs = QgsApplication([], False)" << endl;
+    texte << "qgs.initQgis()" << endl;
+    texte << "project = QgsProject.instance()" << endl;
+    texte << "project.read(\"" + QCoreApplication::applicationDirPath() + "/databank/cartographie/projet_qgis.qgz\")" << endl;
+    /* Vue carto localisée sur le secteur géographique de la station hydro */
+    texte << "qgis.utils.iface.mapCanvas().setExtent(QgsRectangle(" << territoire->Emprise_communale().second[0] << ","
+                                                                    << territoire->Emprise_communale().second[1] << ","
+                                                                    << territoire->Emprise_communale().second[2] << ","
+                                                                    << territoire->Emprise_communale().second[3] << "))" << endl;
+    /* Projection = Lambert 93 Bornes Europe = EPSG 2154 */
+    texte << "lambert93 = QgsCoordinateReferenceSystem(2154, QgsCoordinateReferenceSystem.PostgisCrsId)\n"
+             "qgis.utils.iface.mapCanvas().setDestinationCrs(lambert93)" << endl;
+    /* Référentiels WMS */
+    texte << QString("uri = 'crs=EPSG:2154&featureCount=10&format=image/png&layers=default&styles=&url=https://osm.geograndest.fr/mapcache/'") << endl;
+    texte << QString("qgis.utils.iface.addRasterLayer(uri, 'Open Street Map', 'wms')") << endl;
+    /* Couches SIG de type vecteur (parcelles du pnb10) */
+    texte << QString("couche=iface.addVectorLayer(\"" + QCoreApplication::applicationDirPath() + "/databank/cartographie/pnb10_parcelle/d"+ DEPARTEMENT + "_fftp_2019_pnb10_parcelle_nlocal.shp\", \"pnb10_parcelle\",\"ogr\")") << endl;
+    /* Sélection des parcelles contenant moins d'1 local par ha, pour un affichage transparent */
+    texte << QString("couche.selectByExpression(\"\\\"loc_par_ha\\\"<1\")") << endl;
+    texte << QString("iface.mapCanvas().setSelectionColor(QColor(\"transparent\"))") << endl;
+    /* Finalisation */
+    texte << "qgis.utils.iface.mapCanvas().refresh()";
+
+    fichier.close();
+}
+
+void FenetrePrincipale::Cartographie(bool)
+{
+    /* Customisation du projet QGiS */
+    territoire->Evaluation_emprise_communale();
+    Customisation_projet_QGiS(territoire);
+
+    /* Exécution de QGiS */
+    QProcess *process = new QProcess(this);
+    QString chemin = QDir::toNativeSeparators(QCoreApplication::applicationDirPath())+ "\\QGiS_3.4.5\\usbgis\\apps\\qgis\\bin\\";
+    process->setWorkingDirectory(chemin);
+    process->start(chemin + "qgis-ltr.bat", QStringList());
+}
+
+void FenetrePrincipale::Menu_imprimer_pdf(void)
+{
+    /* Insertion des graphiques sous les tableaux de résultats */
+    QList<QwtPlot *> graphiques;
+    graphiques << graph_bati_cumul << graph_bati_courant << graph_conso_foncier;
+
+    foreach (QwtPlot * plot, graphiques) {
+        QwtPlotRenderer *plotRenderer = new QwtPlotRenderer();
+        QImage *image = new QImage(665, 500, QImage::Format_ARGB32_Premultiplied);
+        plotRenderer->renderTo(plot, (*image));
+
+        QTextCursor cursor = ui->textBrowser_resultat->textCursor();
+        cursor.insertText(QString("\n\n"));
+        cursor.insertImage(*image);
+    }
+
+    /* Définition du nom du fichier pdf et de son répertoire (par défaut le bureau) */
+    QString fichier = QFileDialog::getSaveFileName(this, "Enregistrer fichier pdf", QDir::homePath()+"/Desktop/" + territoire->Granularite() + "_" + territoire->Geographie().second, " PDF (*.pdf)");
+
+    /* Impression */
+    QPrinter printer;
+    printer.setPaperSize(QPrinter::A4Extra);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(fichier);
+
+    QTextDocument *document = new QTextDocument();
+    document = ui->textBrowser_resultat->document();
+    document->print(&printer);
+}
+
+void FenetrePrincipale::Menu_exporter_jpeg(void)
+{    
+    QList<QwtPlot *> graphiques;
+    graphiques << graph_bati_cumul << graph_bati_courant << graph_conso_foncier;
+    QList<QString> noms;
+    noms << "bati_cumul" << "bati_courant" << "conso";
+
+    /* Définition du nom du fichier pdf et de son répertoire (par défaut le bureau) */
+    QString fichier = QFileDialog::getSaveFileName(this, "Enregistrer fichier jpeg", QDir::homePath()+"/Desktop/" + territoire->Granularite() + "_" + territoire->Geographie().second + "_xxx", " JPG (*.jpg)");
+
+    /* Export */
+    QwtPlotRenderer *plotRenderer = new QwtPlotRenderer();
+    for (int i(0); i < graphiques.size(); ++i){
+        QString fichier_modif(fichier);
+        fichier_modif.replace("xxx", noms.at(i));
+        plotRenderer->renderDocument(graphiques.at(i), fichier_modif, QSizeF(300, 200), 120);
+    }
+    delete plotRenderer;
+}
+
+void FenetrePrincipale::Menu_aide(void)
+{
+    QAction * action = qobject_cast<QAction *>(sender());
+
+    QUrl url;
+    if (action->text().contains("manuel", Qt::CaseInsensitive))
+        url.setUrl("file:///databank/documentation/manuel_utilisation.pdf");
+    else if (action->text().contains("méthode", Qt::CaseInsensitive))
+        url.setUrl("file:///databank/documentation/methode.pdf");
+    else
+        QDesktopServices::openUrl(QUrl(action->whatsThis()));
+
+    if (!url.isEmpty()){
+        QUrl url_fichier = QUrl::fromLocalFile(QCoreApplication::applicationDirPath() + url.toLocalFile());
+        QDesktopServices::openUrl(url_fichier);
+    }
+}
+

@@ -3,11 +3,17 @@
 
 #include <QMainWindow>
 #include <QButtonGroup>
+#include <QFileDialog>
+#include <QPrinter>
+#include <QDesktopServices>
+#include <QProcess>
+
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
 #include <qwt_legend.h>
 #include <qwt_plot_grid.h>
 #include <qwt_scale_draw.h>
+#include <qwt_plot_renderer.h>
 
 #include "territoire.h"
 #include "periode.h"
@@ -44,6 +50,10 @@ public:
 public slots:
     void Gestion_granularite_territoire(QAbstractButton *);
     void Validation_des_saisies(bool);
+    void Cartographie(bool);
+    void Menu_imprimer_pdf(void);
+    void Menu_exporter_jpeg(void);
+    void Menu_aide(void);
 
 };
 #endif // FENETREPRINCIPALE_H
