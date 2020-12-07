@@ -12,3 +12,5 @@ Sur base des fichiers MAJIC de la DGFiP, l’application de type IHM fournit, po
     ▪ Gestionnaire de versions du code : Git (version 2.28.0)
     ▪ Plateforme applicative : Azure Devops sous
          https://dev.azure.com/dasycarpum-pro-DDT/Observatoire%20du%20foncier%2054
+
+# Version V2 du 7 décembre 2020
