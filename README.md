@@ -10,6 +10,7 @@ Sur base des fichiers MAJIC de la DGFiP, l’application de type IHM fournit, po
     ▪ IDE : Qt Creator (version 4.10.2)
     ▪ Bibliothèque complémentaire : qwt (version 6.1.5)
     ▪ Gestionnaire de versions du code : Git (version 2.28.0)
+    ▪ Générateur de documentation : Doxygen (version 1.8.20)
     ▪ Plateforme applicative : Azure Devops sous
          https://dev.azure.com/dasycarpum-pro-DDT/Observatoire%20du%20foncier%2054
 

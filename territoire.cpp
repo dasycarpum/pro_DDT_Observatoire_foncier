@@ -1,10 +1,16 @@
 #include "territoire.h"
 
+/**
+ * \brief      Constructeur de la classe
+ * \param      dep  Numéro du département \a "54", "57", ...
+ * \param      gra  Libellé de la granularité \a "Commune", "EPCI", "SCoT" ou "Département"
+ * \param      geo  Code et libellé de la géographie \a p.ex. ("57463", "Metz")
+ */
 Territoire::Territoire(QString const& dep, QString const& gra, QPair<QString, QString> const& geo) : departement(dep), granularite(gra), geographie(geo)
 {
     if (geographie.first.isEmpty()){
 
-        /* N° de champ du libellé géographique pour la granularité choisie par l'utilisateur */
+        /* Recherche du n° de champ du libellé géographique, en fonction de la granularité */
         int champ_lib_geo(0), champ_cod_com(0), champ_cod_dep(0);
 
         FichierCsv *g = new FichierCsv("/databank/territoire/granularite");
@@ -20,7 +26,7 @@ Territoire::Territoire(QString const& dep, QString const& gra, QPair<QString, QS
         }
         delete g;
 
-        /* Liste des codes INSEE communaux du territoire */
+        /* Constitution de la liste des codes INSEE communaux du territoire */
         FichierCsv *cl = new FichierCsv("/databank/territoire/code_libelle");
         cl->Lire();
 
@@ -32,30 +38,38 @@ Territoire::Territoire(QString const& dep, QString const& gra, QPair<QString, QS
     }
 }
 
-QStringList Territoire::Liste_libelles_geographies(QString const& departement, QString const& granularite)
+/**
+ * \brief      Liste les géographies d'une granularité particulière
+ * \details    Cette fonction est utilisée pour afficher les géographies d'une granularité dans une QComboBox \a ui->comboBox_geographie
+ *
+ * \param      dep  Numéro du département \a "54", "57", ...
+ * \param      gra  Libellé de la granularité \a "Commune", "EPCI", "SCoT" ou "Département"
+ * \return     Liste de libellés géographiques d'une granularité
+ */
+QStringList Territoire::Liste_libelles_geographies(QString const& dep, QString const& gra)
 {
     QMap<QString, bool> liste_libelle;
 
-    /* N° de champ des libellés géographiques pour la granularité choisie par l'utilisateur */
+    /* Recherche du n° de champ des libellés géographiques, en fonction de la granularité */
     int champ_lib_geo(0), champ_cod_dep(0);
 
     FichierCsv *g = new FichierCsv("/databank/territoire/granularite");
     g->Lire();
 
     for (int i(1); i < g->matrix.size(); ++i){
-        if (g->matrix[i][0] == granularite)
+        if (g->matrix[i][0] == gra)
             champ_lib_geo = g->matrix[i][2].toInt();
         if (g->matrix[i][0] == "Département")
             champ_cod_dep =  g->matrix[i][1].toInt();
     }
     delete g;
 
-    /* Liste des libellés géographiques pour la granularité retenue */
+    /* Constitution de la liste des libellés géographiques, en fonction de la granularité */
     FichierCsv *cl = new FichierCsv("/databank/territoire/code_libelle");
     cl->Lire();
 
     for (int i(1); i < cl->matrix.size(); ++i)
-        if (cl->matrix[i][champ_cod_dep] == departement)
+        if (cl->matrix[i][champ_cod_dep] == dep)
             liste_libelle[cl->matrix[i][champ_lib_geo]] = true;
 
     delete cl;
@@ -63,15 +77,20 @@ QStringList Territoire::Liste_libelles_geographies(QString const& departement, Q
     return liste_libelle.keys();
 }
 
-/** Calcule les coordonnées XY du rectangle d'emprise maximale
-    ========================================================== */
+/**
+ * \brief      Calcule les coordonnées du rectangle contenant l'emprise géographique du territoire d'étude
+ * \details    Fournit les 2 coordonnées Lambert 93 (EPSG 2154) de la diagonale du rectangle : X_min, Y_min, X_max, Y_max
+ *             à partir d'un fichier des coordonnées communales \a /databank/cartographie/localisation/communes_XY_dep.csv
+ * \param      void
+ * \return     void
+ */
 void Territoire::Evaluation_emprise_communale(void)
 {
-    /* Codes INSEE des communes du territoire */
+    /* Constituion de la liste unique des codes INSEE communaux du territoire */
     foreach (QString const& commune, liste_codes_INSEE_communes)
         emprise_communale.first.insert(commune);
 
-    /* Coordonnées XY du rectangle d'emprise */
+    /* Calcul des coordonnées XY du rectangle (diagonale) de l'emprise du territoire */
     FichierCsv *fc = new FichierCsv("/databank/cartographie/localisation/communes_XY_" + departement);
     fc->Lire();
 

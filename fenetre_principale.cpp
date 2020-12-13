@@ -1,6 +1,9 @@
 #include "fenetre_principale.h"
 #include "ui_fenetre_principale.h"
 
+/**
+ * \brief      Constructeur de la classe
+ */
 FenetrePrincipale::FenetrePrincipale(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::FenetrePrincipale)
@@ -57,6 +60,9 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
     connect(ui->action_methodologie, SIGNAL(triggered()), this, SLOT(Menu_aide()));
 }
 
+/**
+ * \brief      Destructeur de la classe
+ */
 FenetrePrincipale::~FenetrePrincipale()
 {
     delete ui;
@@ -64,6 +70,15 @@ FenetrePrincipale::~FenetrePrincipale()
     delete territoire;
 }
 
+/**
+ * \brief      SLOT - Liste les géographies d'une granularité particulière
+ * \details    Cette fonction est connectée à 2 groupes de boutons (<em> grp_departement & grp_granularite </em>) et
+ *             est utilisée pour afficher les géographies d'une granularité dans une QComboBox (\a ui->comboBox_geographie)
+ *             lorsque un QRadioButton est cliqué; si le bouton cliqué fait partie du \a grp_departement ,
+ *             cela réinitialise la granularité à la commune du département sélectionné par l'utilisateur.
+ * \param      button  QCheckBox du département ou QRadioButton de la granularité;
+ * \return     void
+ */
 void FenetrePrincipale::Gestion_granularite_territoire(QAbstractButton * button)
 {
     if (button->group() == grp_departement){
@@ -78,6 +93,13 @@ void FenetrePrincipale::Gestion_granularite_territoire(QAbstractButton * button)
     }
 }
 
+/**
+ * \brief      SLOT - Validation de la requête
+ * \details    Cette fonction est connectée à un bouton (\a ui->pushButton_validation ); elle traite la requête utilisateur
+ *             selon le territoire et la période choisis, pour afficher tableaux et graphiques de résultats
+ * \param      bool
+ * \return     void
+ */
 void FenetrePrincipale::Validation_des_saisies(bool)
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -117,6 +139,13 @@ void FenetrePrincipale::Validation_des_saisies(bool)
     QApplication::restoreOverrideCursor();
 }
 
+/**
+ * \brief      Affichage du tableau d'occupations du sol
+ * \details    Cette fonction affiche dans un \a QTextBrowser (\a ui->textBrowser_resultat ), un titre (détails du territoire
+ *             et millésime de données) et un tableau répertoriant les usages du sol les plus récents.
+ * \param      algo Classe \link Algorithme \endlink, qui donne accès à son accesseur \link Algorithme::Foncier \endlink de type \link Usage \endlink
+ * \return     void
+ */
 void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
 {
     /* Rafraichissement de la zone d'édition */
@@ -160,6 +189,13 @@ void FenetrePrincipale::Affichage_tableau_occupation(const Algorithme * algo)
                                                 .arg(algo->Foncier().enaf, 0, 'f', 2));
 }
 
+/**
+ * \brief      Affichage du tableau de l'évolution des usages du sol
+ * \details    Cette fonction affiche dans un \a QTextBrowser (\a ui->textBrowser_resultat ), un tableau répertoriant
+ *             pour la période définie, les usages cumulés du sol par pas de temps.
+ * \param      algo Classe \link Algorithme \endlink, qui donne accès à son accesseur \link Algorithme::Usages_par_annee \endlink de type \a QMap<int, \link Usage \endlink >
+ * \return     void
+ */
 void FenetrePrincipale::Affichage_tableau_evolution(const Algorithme * algo)
 {
     /* Titre et en-têtes de colonnes */
@@ -220,6 +256,11 @@ void FenetrePrincipale::Affichage_tableau_evolution(const Algorithme * algo)
     }
 }
 
+/**
+ * \brief   Conversion d'un axe graphique numérique en texte
+ * \details Cette classe permet l'écriture des étiquettes de l'abscisse ou de l'ordonnée d'un graphique (\a QwtPlot )
+ *          au format texte, en lui transmettant une valeur de type \a double
+ */
 class EchelleTxt : public QwtScaleDraw
 {
     virtual QwtText label (double value) const override
@@ -228,6 +269,13 @@ class EchelleTxt : public QwtScaleDraw
     }
 };
 
+/**
+ * \brief      Suppression de tous les widgets d'un \a QLayout
+ * \details    Cette fonction liste tous les widgets du layout transmis en paramètres et les supprime.
+ *             Utilisé pour rafraîchir les graphiques de type \a QwtPlot .
+ * \param      layout Gestionnaire de géométrie \a QLayout , quelle que soit sa classe héritée.
+ * \return     void
+ */
 void FenetrePrincipale::Nettoyage_graphique(QLayout * layout)
 {
     QLayoutItem* child;
@@ -244,6 +292,13 @@ void FenetrePrincipale::Nettoyage_graphique(QLayout * layout)
     }
 }
 
+/**
+ * \brief      Affichage du graphique présentant l'évolution cumulée des surfaces bâties
+ * \details    Cette fonction affiche dans un \a QwtPlot, un graphique représentant les 3 courbes des surfaces bâties :
+ *             habitat individuel, habitat collectif et le bâti non résidentiel, couvrant la période spécifiée.
+ * \param      algo Classe \link Algorithme \endlink, qui donne accès à sa fonction \link Algorithme::Bati_cumule \endlink de type \a QVector<QPointF>
+ * \return     void
+ */
 void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
 {
     /* Graphique : présentation */
@@ -288,6 +343,13 @@ void FenetrePrincipale::Affichage_graphique_bati_cumul(Algorithme * algo)
     graph_bati_cumul->replot();
 }
 
+/**
+ * \brief      Affichage du graphique présentant l'évolution courante des surfaces bâties
+ * \details    Cette fonction affiche dans un \a QwtPlot, un graphique représentant les 3 courbes des surfaces bâties :
+ *             habitat individuel, habitat collectif et le bâti non résidentiel, couvrant la période spécifiée.
+ * \param      algo Classe \link Algorithme \endlink, qui donne accès à sa fonction \link Algorithme::Bati_courant \endlink de type \a QVector<QPointF>
+ * \return     void
+ */
 void FenetrePrincipale::Affichage_graphique_bati_courant(Algorithme * algo)
 {
     /* Graphique : présentation */
@@ -332,6 +394,14 @@ void FenetrePrincipale::Affichage_graphique_bati_courant(Algorithme * algo)
     graph_bati_courant->replot();
 }
 
+/**
+ * \brief      Affichage du graphique présentant l'évolution cumulée et courante de l'artificialisation des sols
+ * \details    Cette fonction affiche dans un \a QwtPlot, un graphique représentant les 2 courbes de l'artificialisation :
+ *             consommation foncière cumulée et annuelle, couvrant la période spécifiée.
+ * \param      algo Classe \link Algorithme \endlink, qui donne accès aux fonctions \link Algorithme::Conso_Foncier_Cumul \endlink
+ *             et \link Algorithme::Conso_Foncier_Courant \endlink de type \a QVector<QPointF>
+ * \return     void
+ */
 void FenetrePrincipale::Affichage_graphique_conso_fonciere(Algorithme * algo)
 {
     /* Graphique : présentation */
@@ -379,12 +449,26 @@ void FenetrePrincipale::Affichage_graphique_conso_fonciere(Algorithme * algo)
     graph_conso_foncier->replot();
 }
 
+/*! \file
+ * \fn      void Customisation_projet_QGiS(const Territoire * territoire)
+ * \brief   Customisation du projet de cartographie de l'artificialisation
+ * \details La fonction va personnaliser l'ouverture du projet QGiS en écrivant un script Python dans un dossier
+ *          temporaire (\a C:\temp\qgis_projet_custom.py ). Le lancement de ce script est inscrit dans le fichier batch
+ *          lors de l'exécution de QGiS (\a \release\QGiS_3.4.5\usbgis\apps\qgis\bin\qgis-ltr.bat ).\n
+ *          Ces spécifications vont principalement concerner les paramètres suivants : zoom sur le territoire concerné,
+ *          ouverture d'un fond raster en WMS, ouverture de la couche vectorielle des parcelles, et affichage des parcelles
+ *          ayant au moins 1 local par hectare.
+ * \param   territoire Classe \link Territoire \endlink qui donne accès à sa fonction \link Territoire::Emprise_communale \endlink
+ * \return  void
+ */
 void Customisation_projet_QGiS(const Territoire * territoire)
 {
+    /* Vérification de l'existence d'un répertoire temporaire, sinon création */
     QDir repertoire("C:\\temp");
     if (!repertoire.exists())
         repertoire.mkdir("C:\\temp");
 
+    /* Ouverture en écriture du fichier de script */
     QString chemin = "C:/temp/qgis_projet_custom.py";
 
     QFile fichier(chemin);
@@ -392,6 +476,9 @@ void Customisation_projet_QGiS(const Territoire * territoire)
         qDebug() << chemin;
 
     QTextStream texte(&fichier);
+
+    /* Complétude du script
+       -------------------- */
 
     /* Bibliothèques */
     texte << "from qgis.utils import iface" << endl;
@@ -427,6 +514,13 @@ void Customisation_projet_QGiS(const Territoire * territoire)
     fichier.close();
 }
 
+/**
+ * \brief      SLOT - Accès au module cartographie de l'artificialisation des sols
+ * \details    La fonction est connectée à un bouton (\a ui->pushButton_cartographie ); elle traite l'accès au logiciel
+ *             SIG (<em> QGiS version 3.4.5 </em>) et à son ouverture personnalisée.
+ * \param      bool
+ * \return     void
+ */
 void FenetrePrincipale::Cartographie(bool)
 {
     /* Customisation du projet QGiS */
@@ -440,6 +534,13 @@ void FenetrePrincipale::Cartographie(bool)
     process->start(chemin + "qgis-ltr.bat", QStringList());
 }
 
+/**
+ * \brief      SLOT - Accès au menu d'impression d'un pdf de synthèse
+ * \details    La fonction est connectée à une \a QAction (\a ui->action_imprimer_pdf ) du \a QMenu \a ui->menu_export,
+ *             et produit une fichier pdf comportant les tableaux et graphiques de la requête utilisateur.
+ * \param      void
+ * \return     void
+ */
 void FenetrePrincipale::Menu_imprimer_pdf(void)
 {
     /* Insertion des graphiques sous les tableaux de résultats */
@@ -470,6 +571,13 @@ void FenetrePrincipale::Menu_imprimer_pdf(void)
     document->print(&printer);
 }
 
+/**
+ * \brief      SLOT - Accès au menu d'export en jpeg des 3 graphiques
+ * \details    La fonction est connectée à une \a QAction (\a ui->action_exporter_jpeg ) du \a QMenu \a ui->menu_export,
+ *             et produit 3 fichiers jpeg comportant chaque graphique de la requête utilisateur.
+ * \param      void
+ * \return     void
+ */
 void FenetrePrincipale::Menu_exporter_jpeg(void)
 {    
     QList<QwtPlot *> graphiques;
@@ -490,6 +598,14 @@ void FenetrePrincipale::Menu_exporter_jpeg(void)
     delete plotRenderer;
 }
 
+/**
+ * \brief      SLOT - Accès au menu d'aide
+ * \details    La fonction est connectée à 2 \a QAction (\a ui->action_manuel_utilisation et \a ui->action_methodologie )
+ *             du \a QMenu \a ui->menu_aide; elle ouvre soit le pdf du manuel d'utilisation de l'IHM, soit celui de la
+ *             méthode de calcul des indicateurs de la consommation foncière.
+ * \param      void
+ * \return     void
+ */
 void FenetrePrincipale::Menu_aide(void)
 {
     QAction * action = qobject_cast<QAction *>(sender());

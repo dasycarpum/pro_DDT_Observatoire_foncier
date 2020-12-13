@@ -1,5 +1,14 @@
 #include "algorithme.h"
 
+/**
+ * \brief      Constructeur de la classe
+ * \details    Le constructeur contient la totalité de l'algorithme de traitement des données pour le calcul
+ *             de l'occupatio du sol au moment du dernier millésime des données \link Foncier \endlink,
+ *             et l'évolution de ses usages durant la période définie \link Usages_par_annee \endlink
+ * \param      t  Le territoire d'étude \link Territoire \endlink
+ * \param      p  La période d'analyse \link Periode \endlink
+ */
+
 Algorithme::Algorithme(const Territoire * t, const Periode * p) : periode(p)
 {
     /* Surface totale du ban communal (IGN BD Topo)
@@ -76,15 +85,15 @@ Algorithme::Algorithme(const Territoire * t, const Periode * p) : periode(p)
     if (voirie_publique < 0)
         voirie_publique = 0;
 
-    /* Correctifs et synthèses de l'occupation du sol au temps t
-       --------------------------------------------------------- */
+    /* Correctifs et synthèses de l'occupation du sol au moment du millésime de données
+       -------------------------------------------------------------------------------- */
     foncier.artificialise += voirie_publique;
     foncier.enaf = (surface_ign - foncier.artificialise) /HA;
     foncier.non_bati = (foncier.artificialise - foncier.habitat - foncier.non_residentiel - foncier.dependance - foncier.a_batir) / HA ;
     foncier.artificialise /= HA; foncier.habitat /= HA; foncier.non_residentiel /= HA; foncier.dependance /= HA; foncier.a_batir /= HA;
 
-    /* Correctifs du conteneur de l'analyse historique
-       ----------------------------------------------- */
+    /* Correctifs du conteneur de l'évolution des usages du sol au cours de la période définie
+       --------------------------------------------------------------------------------------- */
     for (int annee(p->Annee_debut()); annee <= p->Annee_fin(); ++annee){
         usages_par_annee[annee].habitat_individuel += 0;
         usages_par_annee[annee].habitat_collectif += 0;
@@ -92,6 +101,13 @@ Algorithme::Algorithme(const Territoire * t, const Periode * p) : periode(p)
     }
 }
 
+/**
+ * \brief      Mesure l'évolution cumulée du bâti (selon son usage)
+ * \details    Calcule les coordonnées XY, où X = année et Y = nombre de m2 affectés à cet usage
+ *             depuis le début de la période. \n Ces coordonnées sont destinées à tracer la courbe d'un graphique.
+ * \param      arg \link Usage \endlink du sol : <em> habitat_individuel, habitat_collectif ou non_residentiel </em>
+ * \return     Tableau de coordonnées XY
+ */
 QVector<QPointF> Algorithme::Bati_cumule(double Usage:: *arg)
 {
     QVector<QPointF> xy;
@@ -114,6 +130,13 @@ QVector<QPointF> Algorithme::Bati_cumule(double Usage:: *arg)
     return xy;
 }
 
+/**
+ * \brief      Mesure l'évolution courante du bâti (selon son usage)
+ * \details    Calcule les coordonnées XY, où X = année et Y = nombre de m2 affectés à cet usage par année. \n
+ *             Ces coordonnées sont destinées à tracer la courbe d'un graphique.
+ * \param      arg \link Usage \endlink du sol : <em> habitat_individuel, habitat_collectif ou non_residentiel </em>
+ * \return     Tableau de coordonnées XY
+ */
 QVector<QPointF> Algorithme::Bati_courant(double Usage:: *arg)
 {
     QVector<QPointF> xy;
@@ -141,6 +164,13 @@ QVector<QPointF> Algorithme::Bati_courant(double Usage:: *arg)
     return xy;
 }
 
+/**
+ * \brief      Mesure l'évolution cumulée de la consommation foncière
+ * \details    Calcule les coordonnées XY, où X = année et Y = nombre de m2 artificialisés depuis le début de la période.\n
+ *             Ces coordonnées sont destinées à tracer la courbe d'un graphique.
+ * \param      void
+ * \return     Tableau de coordonnées XY (Lambert 93 - EPSG 2154)
+ */
 QVector<QPointF> Algorithme::Conso_Foncier_Cumul(void)
 {
     QVector<QPointF> xy;
@@ -172,6 +202,13 @@ QVector<QPointF> Algorithme::Conso_Foncier_Cumul(void)
     return xy;
 }
 
+/**
+ * \brief      Mesure l'évolution courante de la consommation foncière
+ * \details    Calcule les coordonnées XY, où X = année et Y = nombre de m2 artificialisés par année.\n
+ *             Ces coordonnées sont destinées à tracer la courbe d'un graphique.
+ * \param      xy_cumul Coordonnées XY de la consommation foncière cumulée \link Conso_Foncier_Cumul \endlink
+ * \return     Tableau de coordonnées XY
+ */
 QVector<QPointF> Algorithme::Conso_Foncier_Courant(QVector<QPointF> xy_cumul)
 {
     QVector<QPointF> xy;

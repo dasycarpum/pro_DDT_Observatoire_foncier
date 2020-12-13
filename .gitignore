@@ -53,3 +53,6 @@ CMakeLists.txt.user*
 
 # icone (ajout le 23/11/2020)
 *.ico
+
+# documentation doxygen (ajout le 09/12/2020)
+/doxygen/*
