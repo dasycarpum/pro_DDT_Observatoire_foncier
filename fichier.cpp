@@ -1,7 +1,23 @@
 #include "fichier.h"
 
-/** Lecture du fichier csv et stockage des données dans une matrice
-    =============================================================== */
+/**
+ * \brief      Constructeur de la classe
+ * \param      nom  Accès au fichier csv, incluant le chemin relatif depuis la position de l'exécutable, et le libellé du fichier p.ex. \a "/databank/territoire/code_libelle"
+ * \param      sep  Séparateur de champs (par défaut le ';' )
+ */
+
+FichierCsv::FichierCsv(QString const& nom, QString const& sep) : extension(".csv"), separateur(sep)
+{
+    setFileName(QCoreApplication::applicationDirPath() + nom + extension);
+}
+
+/**
+ * \brief      Lit le fichier csv et stocke les données dans une matrice 2D
+ * \details    Lecture ligne par ligne, chacune scindée ensuite en colonnes par le biais du séparateur,
+ *             pour fournir les attributs qui vont construire une matrice 2D, indexée [ligne][colonne]
+ * \param      void
+ * \return     void
+ */
 void FichierCsv::Lire(void)
 {
     if (!open(QIODevice::ReadOnly | QIODevice::Text))
@@ -24,18 +40,20 @@ void FichierCsv::Lire(void)
         ++l;
     }
 }
-
-/** Retourne la liste des sous-dossiers d'un répertoire
-    =================================================== */
-QStringList FichierCsv::Liste_sous_repertoires(const QString & repertoire)
+/**
+ * \brief      Liste les sous-répertoires du dossier spécifié en paramètre
+ * \param      rep  Chemin relatif du répertoire depuis la position de l'exécutable p.ex. \a "/databank/"
+ * \return     Liste des libellés des sous-répertoires du dossier
+ */
+QStringList FichierCsv::Liste_sous_repertoires(const QString & rep)
 {
     QStringList liste;
 
     QDir dir;
-    if (repertoire.mid(1,1) != ":")
-        dir.setPath(QCoreApplication::applicationDirPath() + repertoire);
+    if (rep.mid(1,1) != ":")
+        dir.setPath(QCoreApplication::applicationDirPath() + rep);
     else
-        dir.setPath(repertoire);
+        dir.setPath(rep);
 
     QFileInfoList listRepertoire = dir.entryInfoList(QDir::Dirs);
 

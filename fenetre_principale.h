@@ -1,3 +1,14 @@
+/**
+ * \file      fenetre_principale.h
+ * \author    Roland VANDE MAELE
+ * \date      7 décembre 2020
+ * \brief     Interface utilisateur
+ *
+ * \details    Cette classe va régir les requêtes de l'utilisateur, principalement l'analyse de la consommation
+ *             foncière d'un territoire durant une période donnée.  Et proposer en retour l'affichage de tableaux
+ *             et de graphiques.
+ */
+
 #ifndef FENETREPRINCIPALE_H
 #define FENETREPRINCIPALE_H
 
@@ -29,6 +40,7 @@ class FenetrePrincipale : public QMainWindow
     Ui::FenetrePrincipale *ui;
 
     Territoire *territoire;
+    QButtonGroup *grp_departement;
     QButtonGroup *grp_granularite;
     Periode *periode;
 
