@@ -8,7 +8,6 @@
  * \param      t  Le territoire d'étude \link Territoire \endlink
  * \param      p  La période d'analyse \link Periode \endlink
  */
-
 Algorithme::Algorithme(const Territoire * t, const Periode * p) : periode(p)
 {
     /* Surface totale du ban communal (IGN BD Topo)
@@ -26,7 +25,7 @@ Algorithme::Algorithme(const Territoire * t, const Periode * p) : periode(p)
        ------------------------------- */
     double parcelle_cadastre(0.0), eau_cadastre(0.0), eau_BDTopo(0.0);
 
-    FichierCsv *f2 = new FichierCsv("/databank/MAJIC_" + QString::number(periode->Millesime()) + "/nonBati");
+    FichierCsv *f2 = new FichierCsv("/databank/MAJIC_" + QString::number(periode->Millesime()) + "/nonBati_" + t->Departement());
     f2->Lire();
 
     for (int i(1); i < f2->matrix.size(); ++i)
