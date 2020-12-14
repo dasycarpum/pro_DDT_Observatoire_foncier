@@ -14,4 +14,4 @@ Sur base des fichiers MAJIC de la DGFiP, l’application de type IHM fournit, po
     ▪ Plateforme applicative : Azure Devops sous
          https://dev.azure.com/dasycarpum-pro-DDT/Observatoire%20du%20foncier%2054
 
-# Version V2 du 7 décembre 2020
+# Version V3 du 14 décembre 2020
