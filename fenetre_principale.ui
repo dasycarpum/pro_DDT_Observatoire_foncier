@@ -457,6 +457,7 @@
      <string>Export</string>
     </property>
     <addaction name="action_imprimer_pdf"/>
+    <addaction name="action_imprimer_doc"/>
     <addaction name="action_exporter_jpeg"/>
    </widget>
    <widget class="QMenu" name="menuAide">
@@ -519,6 +520,15 @@
    </property>
    <property name="toolTip">
     <string>Méthode d'analyse des données</string>
+   </property>
+  </action>
+  <action name="action_imprimer_doc">
+   <property name="icon">
+    <iconset resource="picto.qrc">
+     <normaloff>:/release/databank/pictogramme/docx.png</normaloff>:/release/databank/pictogramme/docx.png</iconset>
+   </property>
+   <property name="text">
+    <string>Imprimer document</string>
    </property>
   </action>
  </widget>

@@ -18,6 +18,7 @@
 #include <QPrinter>
 #include <QDesktopServices>
 #include <QProcess>
+#include <QTextDocumentWriter>
 
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
@@ -64,6 +65,7 @@ public slots:
     void Validation_des_saisies(bool);
     void Cartographie(bool);
     void Menu_imprimer_pdf(void);
+    void Menu_imprimer_doc(void);
     void Menu_exporter_jpeg(void);
     void Menu_aide(void);
 

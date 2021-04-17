@@ -55,6 +55,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent)
 
     /* Menus */
     connect(ui->action_imprimer_pdf, SIGNAL(triggered()), this, SLOT(Menu_imprimer_pdf()));
+    connect(ui->action_imprimer_doc, SIGNAL(triggered()), this, SLOT(Menu_imprimer_doc()));
     connect(ui->action_exporter_jpeg, SIGNAL(triggered()), this, SLOT(Menu_exporter_jpeg()));
     connect(ui->action_manuel_utilisation, SIGNAL(triggered()), this, SLOT(Menu_aide()));
     connect(ui->action_methodologie, SIGNAL(triggered()), this, SLOT(Menu_aide()));
@@ -569,6 +570,28 @@ void FenetrePrincipale::Menu_imprimer_pdf(void)
     QTextDocument *document = new QTextDocument();
     document = ui->textBrowser_resultat->document();
     document->print(&printer);
+}
+
+/**
+ * \brief      SLOT - Accès au menu d'impression au format html
+ * \details    La fonction est connectée à une \a QAction (\a ui->action_imprimer_doc ) du \a QMenu \a ui->menu_export,
+ *             et produit une fichier html comportant les tableaux de la requête utilisateur.
+ * \param      void
+ * \return     void
+ */
+
+void FenetrePrincipale::Menu_imprimer_doc(void)
+{
+    /* Définition du nom du fichier pdf et de son répertoire (par défaut le bureau) */
+    QString fichier = QFileDialog::getSaveFileName(this, "Enregistrer fichier html", QDir::homePath()+"/Desktop/" + territoire->Granularite() + "_" + territoire->Geographie().second, " HTML (*.html)");
+
+    /* Impression */
+    QTextDocument *document = new QTextDocument();
+    document = ui->textBrowser_resultat->document();
+
+    QTextDocumentWriter fileWriter(fichier);
+    fileWriter.setFormat("HTML");
+    fileWriter.write(document);
 }
 
 /**

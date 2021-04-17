@@ -7,5 +7,6 @@
         <file>release/databank/pictogramme/manuel.png</file>
         <file>release/databank/pictogramme/methodologie.png</file>
         <file>release/databank/pictogramme/qgis.png</file>
+        <file>release/databank/pictogramme/docx.png</file>
     </qresource>
 </RCC>
