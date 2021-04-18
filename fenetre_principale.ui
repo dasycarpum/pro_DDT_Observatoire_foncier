@@ -72,7 +72,10 @@
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="text">
-               <string>54 Meurhte-et-Moselle</string>
+               <string>54 Meurthe-et-Moselle</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
               <property name="tristate">
                <bool>false</bool>
@@ -88,7 +91,7 @@
                <string>57 Moselle</string>
               </property>
               <property name="checked">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -457,6 +460,7 @@
      <string>Export</string>
     </property>
     <addaction name="action_imprimer_pdf"/>
+    <addaction name="action_imprimer_doc"/>
     <addaction name="action_exporter_jpeg"/>
    </widget>
    <widget class="QMenu" name="menuAide">
@@ -519,6 +523,15 @@
    </property>
    <property name="toolTip">
     <string>Méthode d'analyse des données</string>
+   </property>
+  </action>
+  <action name="action_imprimer_doc">
+   <property name="icon">
+    <iconset resource="picto.qrc">
+     <normaloff>:/release/databank/pictogramme/docx.png</normaloff>:/release/databank/pictogramme/docx.png</iconset>
+   </property>
+   <property name="text">
+    <string>Imprimer document</string>
    </property>
   </action>
  </widget>
